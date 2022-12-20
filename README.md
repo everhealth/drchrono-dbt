@@ -1,2 +1,2 @@
 # drchrono-dbt
-Manages data transformation for Redshift.
+Manages data transformations for Redshift.
