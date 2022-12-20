@@ -1,0 +1,16 @@
+version: 2
+# need to specify which models are eligible for testing?
+models:
+  - name: ar_2_mv_dbt
+    description: Data model for AgingAR2.0 report. Right now it's used for both Summary and Detail tabs.
+    tests:
+      - dbt_utils.recency:
+          datepart: hour
+          field: created_at
+          interval: 12
+    columns:
+      - name: doctor_id
+        tests:
+          - not_null
+    +tags:
+    - "A/R"

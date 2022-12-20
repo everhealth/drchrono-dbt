@@ -1,0 +1,11 @@
+version: 2
+# need to specify which models are eligible for testing?
+models:
+   - name: daysheet_patientpayments_allocated_bli_mv
+     description: contains PatientPayments allocated to `Appointment`s, with matching BillingLineItems.
+   - name: daysheet_patientpayments_allocated_not_bli_mv
+     description: contains PatientPayments allocated to Appointments, without any BillingLineItems.
+   - name: daysheet_patientpayments_unallocated_bli_mv
+     description: contains unallocated PatientPayments without Appointments, with matching BillingLineItems.
+   - name: daysheet_patientpayments_unallocated_not_bli_mv
+     description: contains unallocated PatientPayments (without `Appointment`s), and without any `BillingLineItem`s.

@@ -1,0 +1,38 @@
+version: 2
+# need to specify which models are eligible for testing?
+models:
+  - name: daysheet_patientpayments_merged
+    description: This `VIEW` is queried by Django for the Patient Payments tab.
+    tests:
+      - dbt_utils.recency:
+          datepart: day
+          field: posted_date
+          interval: 1
+    columns:
+      - name: doctor_id
+        tests:
+          - not_null
+    +tags:
+    - "DaySheet"
+  - name: daysheet_credits_adjustments_all_merged
+    description: This `VIEW` is queried by Django for the Credits tab.
+  - name: daysheet_debits_mv2
+    description: This `VIEW` is queried by Django for the Charges (Debits) tab.
+    tests:
+      - dbt_utils.recency:
+          datepart: day
+          field: created_at
+          interval: 1
+
+macros:
+  - name: daysheet_pp_columns
+    description: Serves as a template + factory for the PatientPayments MVs. Changes the SELECT based on (allocated, bli)
+    arguments:
+      - name: allocated
+        type: bool
+        description: whether `CashPayment.appointment_id` IS NOT NULL
+      - name: bli
+        type: bool
+        description: whether each CashPayment has an associated `BillingLineItem`
+  - name: exam_room_name
+    description: allows reuse of the lengthy `DECODE(ca.examination_room, <etc>)` block.

@@ -1,0 +1,13 @@
+version: 2
+# need to specify which models are eligible for testing?
+models:
+  - name: daysheet_credits_matched_mv
+    tests:
+      - dbt_utils.recency:
+          datepart: day
+          field: posted_date
+          interval: 1
+    columns:
+      - name: doctor_id
+        tests:
+          - not_null
