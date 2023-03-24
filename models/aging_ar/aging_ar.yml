@@ -7,10 +7,18 @@ models:
       - dbt_utils.recency:
           datepart: hour
           field: created_at
-          interval: 12
+          interval: 3
     columns:
       - name: doctor_id
         tests:
           - not_null
+      - name: expected
+        description: Computed as `min(expected_reimbursement, billed)`
+      - name: insurance_name
+        description: primary or secondary `insurer_company`, depending on appointment status.
+      - name: insurance_plan
+        description: primary or secondary `insurance_plan_type`, depending on appointment status.
+      - name: claim_status
+        description: Returns `ins1_status` or `ins2_status`, depending on appointment status.
     +tags:
     - "A/R"
