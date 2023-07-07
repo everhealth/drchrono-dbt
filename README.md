@@ -1,5 +1,5 @@
 # `drchrono-dbt`
-`dbt` brings software engineering best practices to data modeling.  
+[dbt](https://docs.getdbt.com/docs/introduction) brings software engineering best practices to data modeling.  
 This includes DRY, unit tests, versioning, and more. 
 
 This repo stores the source code and dependencies for DrChrono Reporting.  
