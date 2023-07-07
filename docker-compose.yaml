@@ -1,0 +1,11 @@
+services:
+  dbt:
+    build: .
+    command: debug
+    volumes:
+      - .:/usr/app/dbt
+    env_file:
+      - .env
+
+volumes:
+  app:

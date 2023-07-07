@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+.idea
+
+# ENV files
+.env
+
+# Project files
+/dbt_packages
+/logs
+/target
+.dbt/.user.yml
