@@ -33,14 +33,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   drc_redshift_reports:
+    materialized: 'table'
     daysheet:
       # Config indicated by + and applies to all files under models/example/
       +tags:
         - "DaySheet"
-      cash:
-        +materialized: materialized_view
-        +auto_refresh: 'true'
-      credits:
-        +materialized: materialized_view
-        +sort: ['created_at', 'practice_group_id', 'doctor_id']
-        +auto_refresh: 'true'
