@@ -1,7 +1,8 @@
 version: 2
 
 sources:
-  - name: chronometer_production_chronometer_production
+  - name: chronometer_production
+    schema: maria_rds_chronometer_production
     tables:
       - name: billing_appointmentbillingoptions
       - name: billing_appointmentubrevenue
