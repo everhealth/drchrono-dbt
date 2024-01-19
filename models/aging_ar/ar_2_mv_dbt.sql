@@ -3,7 +3,7 @@
     sort=['first_billed_date', 'doctor_id', 'appointment_id', 'patient_id'],
     auto_refresh='true')
 }}
-{% set chronometer_schema = 'chronometer_production_chronometer_production' %}
+{% set chronometer_schema = 'chronometer_production' %}
 SELECT
         -- BLI
         bli.id,
