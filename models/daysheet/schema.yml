@@ -17,12 +17,15 @@ models:
   - name: daysheet_credits_adjustments_all_merged
     description: This `VIEW` is queried by Django for the Credits tab.
   - name: daysheet_debits_mv2
+    config:
+      schema: public
     description: This `VIEW` is queried by Django for the Charges (Debits) tab.
     tests:
       - dbt_utils.recency:
           datepart: day
           field: created_at
           interval: 1
+          
 
 macros:
   - name: daysheet_pp_columns
