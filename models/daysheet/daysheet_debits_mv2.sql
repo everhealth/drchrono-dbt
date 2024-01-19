@@ -3,7 +3,7 @@
     sort = ['created_at', 'scheduled_time', 'practice_group_id', 'doctor_id'],
     auto_refresh = 'true'
 ) }}
-{% set chronometer_schema = 'chronometer_production_chronometer_production' %}
+{% set chronometer_schema = 'chronometer_production' %}
 
 SELECT
     bli.id ,
