@@ -1,7 +1,5 @@
 {{ config(
-    materialized = 'view',
-    sort = ['created_at', 'scheduled_time', 'practice_group_id', 'doctor_id'],
-    auto_refresh = 'true',
+    sort = ['created_at', 'scheduled_time', 'practice_group_id', 'doctor_id']
 ) }}
 {% set chronometer_schema = 'chronometer_production' %}
 
