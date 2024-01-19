@@ -1,1 +1,2 @@
 -- TODO
+SELECT 1
