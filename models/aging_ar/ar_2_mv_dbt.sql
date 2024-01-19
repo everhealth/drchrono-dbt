@@ -3,7 +3,7 @@
     sort=['first_billed_date', 'doctor_id', 'appointment_id', 'patient_id'],
     auto_refresh='true')
 }}
-
+{% set chronometer_schema = 'chronometer_production_chronometer_production' %}
 SELECT
         -- BLI
         bli.id,
@@ -72,17 +72,17 @@ SELECT
         cd.salutation,
         cd.suffix AS doc_suffix
 
-FROM  {{ source('chronometer_production', 'billing_billinglineitem') }} bli
-JOIN {{ source('chronometer_production', 'chronometer_appointment') }} ca
+FROM  {{ source(chronometer_schema, 'billing_billinglineitem') }} bli
+JOIN {{ source(chronometer_schema, 'chronometer_appointment') }} ca
     ON (
         bli.appointment_id = ca.id
         AND ca.appointment_status NOT IN ('Cancelled', 'Rescheduled')
         )
-JOIN {{ source('chronometer_production', 'chronometer_patient') }} pt
+JOIN {{ source(chronometer_schema, 'chronometer_patient') }} pt
     ON (ca.patient_id = pt.id)
-JOIN {{ source('chronometer_production', 'chronometer_doctor') }} cd
+JOIN {{ source(chronometer_schema, 'chronometer_doctor') }} cd
     ON (ca.doctor_id = cd.id)
-JOIN {{ source('chronometer_production', 'chronometer_office') }} co
+JOIN {{ source(chronometer_schema, 'chronometer_office') }} co
     ON (ca.office_id = co.id)
 
 WHERE
