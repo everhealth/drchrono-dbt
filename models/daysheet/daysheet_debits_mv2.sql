@@ -2,7 +2,6 @@
     materialized = 'view',
     sort = ['created_at', 'scheduled_time', 'practice_group_id', 'doctor_id'],
     auto_refresh = 'true',
-    schema='public'
 ) }}
 {% set chronometer_schema = 'chronometer_production' %}
 
