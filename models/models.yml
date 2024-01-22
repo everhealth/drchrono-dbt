@@ -245,5 +245,6 @@ sources:
       - name: billing_eraobject
       - name: billing_billinglineitem
       - name: billing_lineitemtransaction
+      - name: chronometer_appointment
       - name: chronometer_doctor
       - name: chronometer_office
