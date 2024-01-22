@@ -240,10 +240,10 @@ sources:
   - name: chronometer_scrubbed
     schema: chronometer_scrubbed
     tables:
-        -name: billing_cashpayment
-        -name: billing_cptcode
-        -name: billing_eraobject
-        -name: billing_billinglineitem
-        -name: billing_lineitemtransaction
-        -name: chronometer_doctor
-        -name: chronometer_office
+      - name: billing_cashpayment
+      - name: billing_cptcode
+      - name: billing_eraobject
+      - name: billing_billinglineitem
+      - name: billing_lineitemtransaction
+      - name: chronometer_doctor
+      - name: chronometer_office
