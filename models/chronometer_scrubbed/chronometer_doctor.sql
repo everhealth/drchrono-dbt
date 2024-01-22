@@ -30,6 +30,7 @@ SELECT
   , lastname
   , is_paid_user
   , organization_name
+  , firstname || ' ' || lastname as name 
   , _fivetran_deleted
   , _fivetran_synced
 FROM {{ source( 'chronometer_production', 'chronometer_doctor' ) }}
