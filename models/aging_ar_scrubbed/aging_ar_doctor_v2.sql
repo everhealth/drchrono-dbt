@@ -2,7 +2,7 @@
 
 SELECT
     blit.doctor_id
-  , dd.name                                AS doctor_name
+  , dd.firstname || ' ' || dd.lastname AS doctor_name
   , (CASE
          WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 30
              THEN 'a. 0-30 days'
