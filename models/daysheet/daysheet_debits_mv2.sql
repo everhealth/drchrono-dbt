@@ -52,5 +52,6 @@ WHERE ( ca.deleted_flag IS FALSE
         AND NOT ( COALESCE(appointment_status, '') = 'No Show'
         AND bli.procedure_type IN ('C', 'H', 'R') )
         AND NOT ( COALESCE(appointment_status, '') IN ('Cancelled', 'Rescheduled') )
+        AND doctor_id = 245386
 
 )
