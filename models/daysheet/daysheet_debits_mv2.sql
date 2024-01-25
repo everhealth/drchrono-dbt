@@ -1,5 +1,6 @@
 {{ config(
-    sort = ['created_at', 'scheduled_time', 'practice_group_id', 'doctor_id']
+    sort = ['created_at', 'scheduled_time', 'practice_group_id', 'doctor_id'],
+    materialized='incremental'
 ) }}
 {% set chronometer_schema = 'chronometer_production' %}
 
@@ -53,5 +54,12 @@ WHERE ( ca.deleted_flag IS FALSE
         AND bli.procedure_type IN ('C', 'H', 'R') )
         AND NOT ( COALESCE(appointment_status, '') IN ('Cancelled', 'Rescheduled') )
         AND ca.doctor_id = 245386
+        {% if is_incremental() %}
+     
+               -- this filter will only be applied on an incremental run
+               -- (uses > to include records whose timestamp occurred since the last run of this model)
+               AND bli.updated_at > (select max(updated_at) from {{ this }})
+     
+        {% endif %}
 
 )
