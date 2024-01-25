@@ -1,5 +1,5 @@
 {{ config(
-    sort = ['created_at', 'scheduled_time', 'practice_group_id', 'doctor_id'],
+    sort = ['created_at', 'scheduled_time', 'practice_group_id', 'doctor_id']
     -- materialized='incremental'
 ) }}
 {% set chronometer_schema = 'chronometer_production' %}
