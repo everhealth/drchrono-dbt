@@ -35,7 +35,8 @@ SELECT
     ca.scheduled_time ,
     ca.institutional_claim_flag ,
     ca.appointment_status ,
-    ca.reason
+    ca.reason, 
+    bli.updated_at
 FROM  {{ source(chronometer_schema, 'billing_billinglineitem') }} bli
 JOIN {{ source(chronometer_schema, 'chronometer_appointment') }} ca
     ON (bli.appointment_id = ca.id)
@@ -54,9 +55,9 @@ WHERE ( ca.deleted_flag IS FALSE
         AND NOT ( COALESCE(appointment_status, '') IN ('Cancelled', 'Rescheduled') )
     {% if is_incremental() %}
 
-  -- this filter will only be applied on an incremental run
-  -- (uses > to include records whose timestamp occurred since the last run of this model)
-  AND bli.updated_at > (select max(bli.updated_at) from {{ this }})
+          -- this filter will only be applied on an incremental run
+          -- (uses > to include records whose timestamp occurred since the last run of this model)
+          AND bli.updated_at > (select max(updated_at) from {{ this }})
 
-{% endif %}
+    {% endif %}
 )
