@@ -53,10 +53,10 @@ WHERE ( ca.deleted_flag IS FALSE
         AND NOT ( COALESCE(appointment_status, '') = 'No Show'
         AND bli.procedure_type IN ('C', 'H', 'R') )
         AND NOT ( COALESCE(appointment_status, '') IN ('Cancelled', 'Rescheduled') )
-        -- {% if is_incremental() %}
-        --        -- this filter will only be applied on an incremental run
-        --        -- (uses > to include records whose timestamp occurred since the last run of this model)
-        --        AND bli.updated_at > (select max(updated_at) from {{ this }})
-        -- {% endif %}
+        {% if is_incremental() %}
+                -- this filter will only be applied on an incremental run
+                -- (uses > to include records whose timestamp occurred since the last run of this model)
+                AND bli.updated_at > (select max(updated_at) from {{ this }})
+        {% endif %}
 
 )
