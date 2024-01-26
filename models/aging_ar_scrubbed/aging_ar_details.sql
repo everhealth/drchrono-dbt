@@ -35,8 +35,7 @@ SELECT
     END AS "30day_bucket",
     DATE_TRUNC('month', ca.first_billed_date) AS month_bucket,
     DATE_TRUNC('quarter', ca.first_billed_date) AS quarter_bucket,
-    ca.scheduled_time,
-    bli.created_at
+    ca.scheduled_time
 
 FROM {{ source('chronometer_scrubbed', 'billing_billinglineitem') }} bli
 LEFT JOIN {{ source('chronometer_scrubbed', 'chronometer_appointment') }} ca
