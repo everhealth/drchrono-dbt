@@ -8,9 +8,24 @@
 }}
 
 SELECT
-    bli.*,
-    dd.firstname || ' ' || dd.lastname AS doctor_name,
+    bli.id,
+    ca.doctor_id,
     dd.practice_group_id,
+    bli.balance_ins,
+    bli.balance_pt,
+    bli.billed,
+    bli.allowed, -- TODO: We may not need this column?
+    bli.price,
+    bli.quantity,
+    bli.adjustment,
+    bli.expected_reimbursement, -- for AR Days
+    bli.procedure_type,
+    bli.code,
+    bli.created_at,
+    bli.from_date,
+    bli.to_date,
+    bli.appointment_id,
+    dd.firstname || ' ' || dd.lastname AS doctor_name,
     CASE
         WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) BETWEEN 0 AND 30 THEN 'a. 0-30 days'
         WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) BETWEEN 31 AND 60 THEN 'b. 31-60 days'
