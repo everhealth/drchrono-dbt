@@ -18,4 +18,4 @@ JOIN {{ source('chronometer_production', 'chronometer_office') }} co
 WHERE
     amount <> 0
     AND bcp.line_item_id IS NULL
-    AND bcp.appointment_id IS NULL;
+    AND bcp.appointment_id IS NULL

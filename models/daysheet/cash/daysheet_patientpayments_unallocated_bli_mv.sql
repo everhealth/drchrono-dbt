@@ -20,4 +20,4 @@ JOIN {{ source('chronometer_production', 'billing_billinglineitem') }} bli
     ON (bcp.line_item_id = bli.id)
 WHERE
     amount <> 0
-    AND bcp.appointment_id IS NULL;
+    AND bcp.appointment_id IS NULL
