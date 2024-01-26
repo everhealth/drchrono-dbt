@@ -1,19 +1,24 @@
-{{ config(MATERIALIZED='table', dist="even") }}
+{{ 
+    config(
+        materialized='table', 
+        dist="even", 
+        schema = 'public_scrubbed',
+        sort = ['doctor_id']
+    ) 
+}}
 
 SELECT
     blit.doctor_id
   , dd.firstname || ' ' || dd.lastname AS doctor_name
-  , (CASE
-         WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 30
-             THEN 'a. 0-30 days'
-         WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 60
-             THEN 'b. 31-60 days'
-         WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 90
-             THEN 'c. 61-90 days'
-         WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 120
-             THEN 'd. 91-120 days'
-             ELSE 'e. 121+ days'
-     END)                                  AS ar_bucket
+    , (CASE
+        WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) BETWEEN 0 AND 30 THEN 'a. 0-30 days'
+        WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) BETWEEN 31 AND 60 THEN 'b. 31-60 days'
+        WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) BETWEEN 61 AND 90 THEN 'c. 61-90 days'
+        WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) BETWEEN 91 AND 120 THEN 'd. 91-120 days'
+        ELSE 'e. 121+ days'
+    END)  AS ar_bucket
+    DATE_TRUNC('month', ca.first_billed_date) AS month_bucket,
+    DATE_TRUNC('quarter', ca.first_billed_date) AS quarter_bucket,
   , NULLIF( SUM( blit.balance_pt * 1 ), NULL )  AS patient_ar
   , NULLIF( SUM( blit.balance_ins * 1 ), NULL ) AS insurance_ar
 FROM {{ source('chronometer_scrubbed','billing_billinglineitem') }} bli
