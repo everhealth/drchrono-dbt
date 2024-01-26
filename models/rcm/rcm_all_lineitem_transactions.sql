@@ -7,7 +7,6 @@ SELECT
   , lit.era_id                                         AS lit_era_id
   , lit.trace_number                                   AS lit_trace_number
   , lit.claim_status                                   AS lit_claim_status
-  , lit.service_qualifier                              AS lit_service_qualifier
   , lit.adjustment_group_code                          AS lit_adjustment_group_code
   , CONVERT_TIMEZONE( 'EST', 'UTC', lit.posted_date )  AS lit_posted_date
   , lit.allowed                                        AS lit_allowed
@@ -18,7 +17,6 @@ SELECT
   , lit.adjusted_adjustment_reason                     AS lit_adjusted_adjustment_reason
   , lit.code                                           AS lit_code
   , lit.status                                         AS lit_status
-  , lit.modifiers_json                                 AS lit_modifiers_json
   , lit.is_archived                                    AS lit_is_archived
   , lit.ins_idx                                        AS lit_ins_idx
 	--era object
