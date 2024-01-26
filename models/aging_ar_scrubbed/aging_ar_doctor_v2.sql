@@ -17,8 +17,6 @@ SELECT
         WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) BETWEEN 91 AND 120 THEN 'd. 91-120 days'
         ELSE 'e. 121+ days'
     END)  AS ar_bucket
-    DATE_TRUNC('month', ca.first_billed_date) AS month_bucket,
-    DATE_TRUNC('quarter', ca.first_billed_date) AS quarter_bucket,
   , NULLIF( SUM( blit.balance_pt * 1 ), NULL )  AS patient_ar
   , NULLIF( SUM( blit.balance_ins * 1 ), NULL ) AS insurance_ar
 FROM {{ source('chronometer_scrubbed','billing_billinglineitem') }} bli
