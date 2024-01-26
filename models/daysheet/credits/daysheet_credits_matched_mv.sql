@@ -71,4 +71,4 @@ AND NOT (
     COALESCE(lit.adjustment_group_code, '') = 'CO'
     AND lit.ins_idx = 2
 )
-);
+)
