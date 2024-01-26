@@ -110,4 +110,4 @@ FROM
             *
         FROM
             {{ref('daysheet_patientpayments_unallocated_not_bli_mv')}}
-    ) derived_table1;
+    ) derived_table1
