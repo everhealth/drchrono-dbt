@@ -71,5 +71,5 @@ AND NOT (
     COALESCE(lit.adjustment_group_code, '') = 'CO'
     AND lit.ins_idx = 2
 )
-AND lit.created_at >= CURRENT_DATE - INTERVAL '1 year';
+AND lit.created_at >= CURRENT_DATE - INTERVAL '1 year'
 )
