@@ -1,5 +1,5 @@
 {{ config(
-    materialized = 'view',
+    materialized = 'table',
     sort = ['created_at', 'practice_group_id', 'doctor_id'],
     auto_refresh = 'true'
 ) }}
