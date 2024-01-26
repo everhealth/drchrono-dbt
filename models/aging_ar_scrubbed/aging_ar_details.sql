@@ -6,18 +6,18 @@ SELECT
   , dd.firstname || ' ' || dd.lastname  AS doctor_name
   , dd.practice_group_id
   , (CASE
-         WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 30
+         WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) <= 30
              THEN 'a. 0-30 days'
-         WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 60
+         WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) <= 60
              THEN 'b. 31-60 days'
-         WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 90
+         WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) <= 90
              THEN 'c. 61-90 days'
-         WHEN DATE_PART( 'day', CURRENT_DATE::TIMESTAMP - ca.first_billed_date::TIMESTAMP ) <= 120
+         WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) <= 120
              THEN 'd. 91-120 days'
              ELSE 'e. 121+ days'
-     END)                                       AS "30day_bucket"
-  , DATE_TRUNC( month, ca.first_billed_date )   AS month_bucket
-  , DATE_TRUNC( quarter, ca.first_billed_date ) AS quarter_bucket
+     END)                                         AS "30day_bucket"
+  , DATE_TRUNC('month', ca.first_billed_date )   AS month_bucket
+  , DATE_TRUNC('quarter', ca.first_billed_date ) AS quarter_bucket
 
 FROM {{ source( 'chronometer_scrubbed', 'billing_billinglineitem' ) }} bli
 LEFT JOIN {{ source('chronometer_scrubbed','chronometer_appointment') }} ca
