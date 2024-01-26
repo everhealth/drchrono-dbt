@@ -15,7 +15,7 @@ SELECT
          WHEN DATEDIFF('day', ca.first_billed_date, CURRENT_DATE) <= 120
              THEN 'd. 91-120 days'
              ELSE 'e. 121+ days'
-     END)                                         AS "30day_bucket"
+     END)                                        AS "30day_bucket"
   , DATE_TRUNC('month', ca.first_billed_date )   AS month_bucket
   , DATE_TRUNC('quarter', ca.first_billed_date ) AS quarter_bucket
 
