@@ -29,4 +29,4 @@ LEFT JOIN {{ source('chronometer_scrubbed', 'chronometer_appointment') }} ca
 LEFT JOIN {{ source('chronometer_scrubbed', 'billing_cashpayment') }} bcp
     ON bcp.line_item_id = bli.id
 JOIN {{ source('chronometer_scrubbed', 'chronometer_doctor') }} dd
-    ON blit.doctor_id = dd.id
+    ON ca.doctor_id = dd.id
