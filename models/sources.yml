@@ -238,7 +238,7 @@ sources:
       - name: chronometer_patient
       - name: chronometer_simpledrpayerenrollment
   - name: chronometer_scrubbed
-    schema: chronometer_scrubbed
+    schema: public_chronometer_scrubbed
     tables:
       - name: billing_cashpayment
       - name: billing_cptcode

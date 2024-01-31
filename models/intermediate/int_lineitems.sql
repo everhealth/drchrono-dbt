@@ -1,4 +1,4 @@
-{{ config(MATERIALIZED='table', dist="even",SORT = ['bli_created_at', 'appt_scheduled_time', 'practice_group_id', 'doctor_id']) }}
+{{ config(SORT = ['bli_created_at', 'appt_scheduled_time', 'practice_group_id', 'doctor_id']) }}
 
 WITH
     appt_filtered AS (

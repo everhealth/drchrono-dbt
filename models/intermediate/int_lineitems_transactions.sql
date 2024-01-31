@@ -1,4 +1,3 @@
-{{ config(materialized='table', dist="even") }}
 
 
 SELECT
@@ -31,7 +30,7 @@ SELECT
   , CONVERT_TIMEZONE( 'EST', 'UTC', era.updated_at )   AS era_updated_at
   , CONVERT_TIMEZONE( 'EST', 'UTC', era.deposit_date ) AS era_deposit_date
 FROM {{source( 'chronometer_production', 'billing_lineitemtransaction' ) }} lit
-LEFT JOIN {{ ref('rcm_all_lineitems') }} ali
+LEFT JOIN {{ ref('int_lineitems') }} ali
 		  ON ali.line_item_id = lit.line_item_id
 LEFT JOIN {{source( 'chronometer_production', 'billing_eraobject' ) }} era
 		  ON era.id = lit.era_id

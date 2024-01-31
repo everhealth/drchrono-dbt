@@ -28,35 +28,3 @@ redshift_reports:
       type: redshift
       user: dbt_stg
   target: staging
-
- scrubbed:
-   outputs:
-    dev:
-      dbname: "{{ env_var('REDSHIFT_DBNAME_STG') }}"
-      host: "{{ env_var('REDSHIFT_HOST_REPORTING_STG') }}"
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_STG') }}"
-      port: 5439
-      schema: chronometer_scrubbed_dev
-      threads: 2
-      type: redshift
-      user: dbt_stg
-    prod:
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_PROD') }}"
-      host: "{{ env_var('REDSHIFT_HOST_REPORTING_PROD') }}"
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_PROD') }}"
-      port: 5439
-      schema: chronometer_scrubbed
-      threads: 2
-      type: redshift
-      user: dbt_prod
-    staging:
-      dbname: "{{ env_var('REDSHIFT_DBNAME_STG') }}"
-      host: "{{ env_var('REDSHIFT_HOST_REPORTING_STG') }}"
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_STG') }}"
-      port: 5439
-      schema: chronometer_scrubbed
-      threads: 2
-      type: redshift
-      user: dbt_stg
-  target: staging
-  
