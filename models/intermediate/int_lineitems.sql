@@ -50,12 +50,12 @@ WITH
                        , cd.id                                                  AS doctor_id
                        , cd.practice_group_id
 
-                     FROM {{source( 'chronometer_production', 'chronometer_appointment' ) }} da
-					 JOIN {{source( 'chronometer_production', 'chronometer_doctor' ) }} cd
+                     FROM {{source( 'chronometer_scrubbed', 'chronometer_appointment' ) }} da
+					 JOIN {{source( 'chronometer_scrubbed', 'chronometer_doctor' ) }} cd
                      ON cd.id = da.doctor_id
-                         JOIN {{source( 'chronometer_production', 'chronometer_office' ) }} co
+                         JOIN {{source( 'chronometer_scrubbed', 'chronometer_office' ) }} co
                          ON co.id = da.office_id
-                         JOIN {{source( 'chronometer_production', 'chronometer_patient' ) }} cp
+                         JOIN {{source( 'chronometer_scrubbed', 'chronometer_patient' ) }} cp
                          ON cp.id = da.patient_id
                      WHERE
                          da.deleted_flag IS FALSE
@@ -87,7 +87,7 @@ SELECT
   , CONVERT_TIMEZONE( 'EST', 'UTC', bli.created_at ) AS bli_created_at
   , bli.expected_reimbursement                       AS bli_expected_reimbursement
   , af.*
-FROM {{source( 'chronometer_production', 'billing_billinglineitem' ) }} bli
+FROM {{source( 'chronometer_scrubbed', 'billing_billinglineitem' ) }} bli
 LEFT JOIN appt_filtered af
 		  USING ( appointment_id )
 WHERE

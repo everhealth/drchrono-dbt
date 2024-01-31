@@ -16,3 +16,4 @@ WHERE
 		-- adjustment_reasons: -3 = insurance payment, 225 = interest, 253 = sequestration
   AND   lit_is_archived IS FALSE
   AND   include_era_payment_status = 'include_era_payment'
+  AND   DATEDIFF( DAY, bli_created_at, CURRENT_DATE )
