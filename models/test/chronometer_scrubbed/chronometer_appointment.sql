@@ -65,3 +65,4 @@ SELECT
   , _fivetran_deleted
   , _fivetran_synced
 FROM {{ source( 'chronometer_production', 'chronometer_appointment' ) }}
+WHERE created_at > '2023-01-01'

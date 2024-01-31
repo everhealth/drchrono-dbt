@@ -24,3 +24,4 @@ SELECT
   , _fivetran_deleted
   , _fivetran_synced
 FROM {{ source( 'chronometer_production', 'billing_cashpayment' ) }}
+WHERE created_at > '2023-01-01'
