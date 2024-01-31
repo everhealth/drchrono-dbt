@@ -1,4 +1,4 @@
-{{ config(MATERIALIZED='table', profile='scrubbed') }}
+{{ config(MATERIALIZED='table', profile='scrubbed', schema='chronometer_scrubbed') }}
 
 SELECT
     id
