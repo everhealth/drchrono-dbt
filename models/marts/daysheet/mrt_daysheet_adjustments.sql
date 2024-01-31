@@ -15,4 +15,4 @@ WHERE
   AND   lit_ins_paid = 0
   AND   lit_is_archived IS FALSE
   AND   include_era_payment_status = 'include_era_payment'
-  AND   DATEDIFF( DAY, lit_created_at, CURRENT_DATE )
+  AND   DATEDIFF( DAY, lit_created_at, CURRENT_DATE ) < 365
