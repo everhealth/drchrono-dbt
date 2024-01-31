@@ -21,10 +21,10 @@ redshift_reports:
     staging:
       dbname: "{{ env_var('REDSHIFT_DBNAME_STG') }}"
       host: "{{ env_var('REDSHIFT_HOST_REPORTING_STG') }}"
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_STG') }}"
+      password: "{{ env_var('REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
       port: 5439
       schema: public
       threads: 2
       type: redshift
-      user: dbt_stg
+      user: reports_user
   target: staging
