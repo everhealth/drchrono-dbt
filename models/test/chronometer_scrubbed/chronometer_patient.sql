@@ -1,5 +1,3 @@
-{{ config(MATERIALIZED='table', profile='scrubbed', SCHEMA='chronometer_scrubbed') }}
-
 SELECT
     id
   , primary_patient_relationship_to_subscriber

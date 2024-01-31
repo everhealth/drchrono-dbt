@@ -1,5 +1,3 @@
-{{ config(MATERIALIZED='table', profile='scrubbed', schema='chronometer_scrubbed') }}
-
 SELECT
     id
   , payment_type

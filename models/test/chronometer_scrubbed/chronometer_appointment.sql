@@ -1,5 +1,3 @@
-{{ config(MATERIALIZED='table', profile='scrubbed', SCHEMA='chronometer_scrubbed') }}
-
 SELECT
     id
   , is_demo_data_appointment

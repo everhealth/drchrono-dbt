@@ -1,4 +1,4 @@
-{{ config(materialized='table', dist="even") }}
+
 
 SELECT *
 	 , CASE
@@ -8,7 +8,7 @@ SELECT *
 			   THEN 'exclude_era_payment'
 			   ELSE 'include_era_payment'
 	   END AS include_era_payment_status
-FROM {{ ref('rcm_all_lineitem_transactions') }}
+FROM {{ ref('int_lineitems_transactions') }}
 WHERE
 		COALESCE( appointment_status, '' ) NOT IN ( 'No Show', 'Cancelled', 'Rescheduled' )
   AND   lit_ins_paid <> 0
