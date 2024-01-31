@@ -1,5 +1,3 @@
-
-
 SELECT *
 	 , CASE
 		   WHEN doc_verify_era_before_post IS TRUE AND era_is_verified IS FALSE
@@ -16,4 +14,4 @@ WHERE
 		-- adjustment_reasons: -3 = insurance payment, 225 = interest, 253 = sequestration
   AND   lit_is_archived IS FALSE
   AND   include_era_payment_status = 'include_era_payment'
-  AND   DATEDIFF( DAY, bli_created_at, CURRENT_DATE )
+  AND   DATEDIFF( DAY, lit_created_at, CURRENT_DATE ) < 365
