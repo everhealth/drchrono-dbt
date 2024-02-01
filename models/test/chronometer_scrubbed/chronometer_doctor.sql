@@ -19,7 +19,7 @@ SELECT
   , credit_card_plan_type
   , specialty
   , is_beta_user
-  , NULL AS license_number
+  , NULL                         AS license_number
   , job_title
   , supervising_provider_flag
   , firstname
@@ -28,7 +28,8 @@ SELECT
   , lastname
   , is_paid_user
   , organization_name
-  , firstname || ' ' || lastname as name 
+  , firstname || ' ' || lastname AS name
+  , verify_era_before_post
   , _fivetran_deleted
   , _fivetran_synced
 FROM {{ source( 'chronometer_production', 'chronometer_doctor' ) }}
