@@ -23,7 +23,9 @@ jobs:
         REDSHIFT_APP_PASSWORD_REPORTING_STG: ${{ secrets.REDSHIFT_APP_PASSWORD_REPORTING_STG }}
         REDSHIFT_DBNAME_STG: ${{ secrets.REDSHIFT_DBNAME_STG }}
         REDSHIFT_HOST_REPORTING_STG: ${{ secrets.REDSHIFT_HOST_REPORTING_STG }}
+        DBT_PROFILES_DIR: ./.dbt
       run: |
-        pipenv run dbt debug --profiles-dir ./.dbt
-        pipenv run dbt compile --profiles-dir ./.dbt
-        pipenv run dbt test --profiles-dir ./.dbt
+        pipenv run dbt deps 
+        pipenv run dbt debug  
+        pipenv run dbt compile
+        pipenv run dbt test
