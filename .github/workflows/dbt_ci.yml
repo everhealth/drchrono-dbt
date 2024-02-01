@@ -25,7 +25,7 @@ jobs:
         export REDSHIFT_HOST_REPORTING_STG=${{ secrets.REDSHIFT_HOST_REPORTING_STG }}
     - name: Run dbt compile
       run: |
-        pipenv run dbt compile --profiles-dir .
+        pipenv run dbt compile --profiles-dir ./.dbt
     - name: Run dbt test
       run: |
-        pipenv run dbt test --profiles-dir .
+        pipenv run dbt test --profiles-dir ./.dbt
