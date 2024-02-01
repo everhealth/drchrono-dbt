@@ -10,7 +10,7 @@ redshift_reports:
       type: redshift
       user: dbt_stg
     prod:
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_PROD') }}"
+      dbname: "{{ env_var('REDSHIFT_DBNAME_PROD') }}"
       host: "{{ env_var('REDSHIFT_HOST_REPORTING_PROD') }}"
       password: "{{ env_var('REDSHIFT_APP_PASSWORD_PROD') }}"
       port: 5439
