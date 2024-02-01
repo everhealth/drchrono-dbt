@@ -11,6 +11,7 @@ SELECT
   , statement_balance
   , CONCAT( LEFT( first_name, 1 ), '*****' )                   AS first_name
   , CONCAT( LEFT( last_name, 1 ), '*****' )                    AS last_name
+  , CONCAT( LEFT( middle_name, 1 ), '*****' )                    AS middle_name
   , primary_insurance_company
   , current_balance
   , is_demo_data_patient
