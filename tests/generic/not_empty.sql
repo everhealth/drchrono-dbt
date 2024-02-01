@@ -1,4 +1,4 @@
-{% macro test_not_empty(model, column_name) %}
+{% test not_empty(model) %}
 
 with validation as (
 
@@ -22,4 +22,4 @@ validation_errors as (
 select count(*)
 from validation_errors
 
-{% endmacro %}
+{% endtest %}

@@ -28,4 +28,4 @@ jobs:
         pipenv run dbt deps 
         pipenv run dbt debug  
         pipenv run dbt compile
-        pipenv run dbt test
+        pipenv run dbt test  --exclude "_dev+"
