@@ -21,7 +21,7 @@ jobs:
     - name: Load .env
       run: |
         set -a
-        source source ${GITHUB_WORKSPACE}/.env
+        source /Users/alexanderwickstrom/venvs/drchrono/drchrono-dbt/.env
         set +a
     - name: Run dbt compile
       run: |
