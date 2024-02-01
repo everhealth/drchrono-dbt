@@ -18,14 +18,12 @@ jobs:
       run: |
         pip install pipenv
         pipenv install
-    - name: Use Secrets
+    - name: Run dbt tests
+      env:
+        REDSHIFT_APP_PASSWORD_REPORTING_STG: ${{ secrets.REDSHIFT_APP_PASSWORD_REPORTING_STG }}
+        REDSHIFT_DBNAME_STG: ${{ secrets.REDSHIFT_DBNAME_STG }}
+        REDSHIFT_HOST_REPORTING_STG: ${{ secrets.REDSHIFT_HOST_REPORTING_STG }}
       run: |
-        export REDSHIFT_APP_PASSWORD_REPORTING_STG=${{ secrets.REDSHIFT_APP_PASSWORD_REPORTING_STG }}
-        export REDSHIFT_DBNAME_STG=${{ secrets.REDSHIFT_DBNAME_STG }}
-        export REDSHIFT_HOST_REPORTING_STG=${{ secrets.REDSHIFT_HOST_REPORTING_STG }}
-    - name: Run dbt compile
-      run: |
+        pipenv run dbt debug --profiles-dir ./.dbt
         pipenv run dbt compile --profiles-dir ./.dbt
-    - name: Run dbt test
-      run: |
         pipenv run dbt test --profiles-dir ./.dbt
