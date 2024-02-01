@@ -49,6 +49,7 @@ WITH
                          -- chronometer_doctor
                        , cd.id                                                  AS doctor_id
                        , cd.practice_group_id
+					   , cd.verify_era_before_post                                 AS doc_verify_era_before_post
 
                      FROM {{source( 'chronometer_scrubbed', 'chronometer_appointment' ) }} da
 					 JOIN {{source( 'chronometer_scrubbed', 'chronometer_doctor' ) }} cd
