@@ -18,11 +18,11 @@ jobs:
       run: |
         pip install pipenv
         pipenv install
-    - name: Load .env
+    - name: Use Secrets
       run: |
-        set -a
-        source source /Users/alexanderwickstrom/venvs/drchrono/drchrono-dbt/.env
-        set +a
+        export REDSHIFT_APP_PASSWORD_REPORTING_STG=${{ secrets.REDSHIFT_APP_PASSWORD_REPORTING_STG }}
+        export REDSHIFT_DBNAME_STG=${{ secrets.REDSHIFT_DBNAME_STG }}
+        export REDSHIFT_HOST_REPORTING_STG=${{ secrets.REDSHIFT_HOST_REPORTING_STG }}
     - name: Run dbt compile
       run: |
         pipenv run dbt compile --profiles-dir .
