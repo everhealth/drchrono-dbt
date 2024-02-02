@@ -29,4 +29,3 @@ ON ca.id = bli.appointment_id
     JOIN {{ source('chronometer_scrubbed','chronometer_doctor') }} dd
     ON ca.doctor_id = dd.id
 GROUP BY 1, 2, 3, 4
-HAVING (patient_ar <> 0 OR insurance_ar <> 0)
