@@ -28,6 +28,4 @@ ON ca.id = bli.appointment_id
     ON bcp.line_item_id = bli.id
     JOIN {{ source('chronometer_scrubbed','chronometer_doctor') }} dd
     ON ca.doctor_id = dd.id
-GROUP BY 1, 2, 3
-
-
+GROUP BY 1, 2, 3, 4
