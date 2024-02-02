@@ -23,7 +23,7 @@ SELECT
     ca.examination_room AS exam_room_id,
     {{ exam_room_name() }},
     ca.service_date_start_date,
-    ca.service_date_end_date,  
+    ca.service_date_end_date,
     ca.first_billed_date,
     ca.scheduled_time,
     ca.institutional_claim_flag,
