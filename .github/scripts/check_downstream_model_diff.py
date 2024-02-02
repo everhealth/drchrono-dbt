@@ -42,7 +42,7 @@ unique_downstream_models = set([x.get("original_file_path") for x in downstream_
 # Print models for CI/CD usage
 print("DOWNSTREAM MODELS:")
 print(' '.join(unique_downstream_models))
-
+print("Running models...\n")
 for model in unique_downstream_models:
-    subprocess.check_output(['dbt', 'run', '--select', model, '--vars', '{"schema_override": "dbt_test"}'])
+    subprocess.check_output(['dbt', 'run', '--select', str('+' + model), '--log-level', 'debug', '--vars', '{"schema_override": "dbt_test"}'])
     print(f"Finished running {model}")
