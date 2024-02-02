@@ -1,6 +1,4 @@
 {{ config(
-    materialized = 'table',
-    schema="marts",
     sort = ['doctor_id', 'posted_date', 'scheduled_time']
 ) }}
 
