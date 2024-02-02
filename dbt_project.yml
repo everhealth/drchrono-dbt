@@ -48,8 +48,10 @@ models:
     test:
       +materialized: table
       +schema: chronometer_scrubbed
-      # Config indicated by + and applies to all files under models/example/
       +tags:
         - "DaySheet"
+    admin:
+      +materialized: table
+      +schema: admin
   dbt_project_evaluator:
     +schema: project_eval
