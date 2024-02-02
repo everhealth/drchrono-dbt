@@ -2,6 +2,7 @@ import subprocess
 import json
 import os
 
+print(f"Starting {__name__}")
 # Step 1: Identify changed files using git diff
 changed_files_output = subprocess.check_output(['git', 'diff', '--name-only', 'main...HEAD'])
 changed_files = changed_files_output.decode('utf-8').split('\n')
