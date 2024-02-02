@@ -26,7 +26,8 @@ SELECT
     ca.service_date_end_date,
     ca.first_billed_date,
     ca.scheduled_time,
-    ca.institutional_claim_flag
+    ca.institutional_claim_flag,
+    bli.code as billing_code
 FROM
     {{ ref('int_cashpayments') }} bcp
     LEFT JOIN {{source( 'chronometer_scrubbed', 'chronometer_appointment' ) }} ca
