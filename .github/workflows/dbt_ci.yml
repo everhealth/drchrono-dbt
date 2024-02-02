@@ -18,14 +18,14 @@ jobs:
       run: |
         pip install pipenv
         pipenv install
-    - name: Load .env
+    - name: Run dbt tests
+      env:
+        REDSHIFT_APP_PASSWORD_REPORTING_STG: ${{ secrets.REDSHIFT_APP_PASSWORD_REPORTING_STG }}
+        REDSHIFT_DBNAME_STG: ${{ secrets.REDSHIFT_DBNAME_STG }}
+        REDSHIFT_HOST_REPORTING_STG: ${{ secrets.REDSHIFT_HOST_REPORTING_STG }}
+        DBT_PROFILES_DIR: ./.dbt
       run: |
-        set -a
-        source source /Users/alexanderwickstrom/venvs/drchrono/drchrono-dbt/.env
-        set +a
-    - name: Run dbt compile
-      run: |
-        pipenv run dbt compile --profiles-dir .
-    - name: Run dbt test
-      run: |
-        pipenv run dbt test --profiles-dir .
+        pipenv run dbt deps 
+        pipenv run dbt debug  
+        pipenv run dbt compile
+        pipenv run dbt test  --exclude "_dev+"
