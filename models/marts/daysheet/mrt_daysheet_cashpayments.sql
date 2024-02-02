@@ -36,14 +36,7 @@ FROM
         AND ca.deleted_flag IS FALSE
         AND ca.is_demo_data_appointment IS FALSE
         AND ca.appt_is_break IS FALSE
-        AND COALESCE(
-            ca.appointment_status,
-            ''
-        ) NOT IN (
-            'No Show',
-            'Cancelled',
-            'Rescheduled'
-        )
+        AND COALESCE(ca.appointment_status,'') NOT IN ('Cancelled', 'Rescheduled')
     )
     JOIN {{ source( 'chronometer_scrubbed','chronometer_doctor') }} cd
     ON (
