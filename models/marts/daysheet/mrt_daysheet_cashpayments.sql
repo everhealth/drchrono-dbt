@@ -7,16 +7,16 @@ SELECT
     -- CashPayment
     bcp.*,
     -- Patient
-    cp.first_name,
-    cp.middle_name,
-    cp.last_name,
-    cp.chart_id,
-    co.name,
+    cp.first_name AS patient_first_name,
+    cp.middle_name AS patient_middle_name,
+    cp.last_name AS patient_last_name,
+    cp.chart_id AS patient_chart_id,
+    co.name AS office_name,
     -- Doctor
-    cd.firstname,
-    cd.lastname,
-    cd.salutation,
-    cd.suffix,
+    cd.firstname AS doctor_first_name,
+    cd.lastname AS doctor_last_name,
+    cd.salutation AS doctor_salutation,
+    cd.suffix AS doctor_suffix,
     cd.practice_group_id,
     -- Appointment
     -- exam_room: ID and NAME
