@@ -10,6 +10,7 @@ Provide a short summary in the Title above. Examples of good PR titles:
 Describe your changes, and why you're making them. Is this linked to an open
 issue, a Trello card, or another pull request? Link it here.
 -->
+Ticket: [PRA-XYZ](https://drchrono.atlassian.net/browse/PRA-XYZ)
 
 ## To-do before merge
 <!---
@@ -53,7 +54,5 @@ addressed, and remove any items that are not relevant to this PR.
 - [ ] I have materialized my models appropriately.
 - [ ] I have added appropriate tests and documentation to any new models.
 - [ ] I have updated the README file.
-{%- if project.warehouse == 'redshift' %}
 - [ ] I have added sort and dist keys to models materialized as tables.
 - [ ] I have validated the SQL in any late-binding views.
-{% endif %}
