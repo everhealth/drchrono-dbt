@@ -28,4 +28,5 @@ jobs:
         pipenv run dbt deps 
         pipenv run dbt debug  
         pipenv run dbt compile
+        pipenv run python .github/scripts/check_downstream_model_diff.py
         pipenv run dbt test  --exclude "_dev+"
