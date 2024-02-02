@@ -44,5 +44,5 @@ print("DOWNSTREAM MODELS:")
 print(' '.join(unique_downstream_models))
 
 for model in unique_downstream_models:
-    subprocess.check_output(['dbt', 'run', '--select', 'model', '-v', '--vars', '{"schema_override": "dbt_test"}'])
+    subprocess.check_output(['dbt', 'run', '--select', model, '--vars', '{"schema_override": "dbt_test"}'])
     print(f"Finished running {model}")
