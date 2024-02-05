@@ -38,20 +38,20 @@ models:
   drc_redshift_reports:
     staging:
       +materialized: view
-      +schema: staging
+      +schema: "{{ var('schema_override', 'staging') }}"
     intermediate:
       +materialized: view
-      +schema: intermediate
+      +schema: "{{ var('schema_override', 'intermediate') }}"
     marts:
       +materialized: table
-      +schema: marts
+      +schema: "{{ var('schema_override', 'marts') }}"
     test:
       +materialized: table
-      +schema: chronometer_scrubbed
+      +schema: "{{ var('schema_override', 'chronometer_scrubbed') }}"
       +tags:
         - "DaySheet"
     admin:
       +materialized: table
-      +schema: admin
+      +schema: "{{ var('schema_override', 'admin') }}"
   dbt_project_evaluator:
     +schema: project_eval
