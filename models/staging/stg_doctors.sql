@@ -1,15 +1,13 @@
-SELECT
-    id                                         AS doctor_id
-  , practice_group_id
-  , verify_era_before_post                     AS doc_verify_era_before_post
-  , CASE
-        WHEN salutation IS NOT NULL
-            THEN salutation || ' '
-            ELSE ''
-    END || firstname || ' ' || lastname || CASE
-                                               WHEN suffix IS NOT NULL
-                                                   THEN ', ' || suffix
-                                                   ELSE ''
-                                           END AS doc_fullname
+select
+    id as doctor_id,
+    practice_group_id,
+    verify_era_before_post as doc_verify_era_before_post,
+    case when salutation is not null then salutation || ' ' else '' end
+    || firstname
+    || ' '
+    || lastname
+    || case
+        when suffix is not null then ', ' || suffix else ''
+    end as doc_fullname
 
-FROM {{ source( 'chronometer_scrubbed', 'chronometer_doctor' ) }}
+from {{ source("chronometer_scrubbed", "chronometer_doctor") }}

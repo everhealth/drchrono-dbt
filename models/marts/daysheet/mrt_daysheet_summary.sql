@@ -1,98 +1,95 @@
-SELECT
-    --filter fields
-    'debit'             AS dtype
-  , doctor_id
-  , office_id
-  , bli_code
-  , practice_group_id
-  , appt_scheduled_time AS dos
-  , bli_created_at      AS debit_posted_date
-  , NULL                AS ca_posted_date
-  , NULL                AS ca_check_date
-  , NULL                AS ca_deposit_date
-  , NULL                AS cash_posted_date
-  , NULL                AS cash_recieved_date
+select
+    -- filter fields
+    'debit' as daysheet_type,
+    {{ doctor_fields("d") }},
+    {{ office_fields("d") }},
+    bli_code,
+    practice_group_id,
+    appt_scheduled_time as dos,
+    bli_created_at as debit_posted_date,
+    null as ca_posted_date,
+    null as ca_check_date,
+    null as ca_deposit_date,
+    null as cash_posted_date,
+    null as cash_recieved_date,
 
-    --metric fields
-  , bli_billed          AS debit_amount
-  , NULL                AS credit_amount
-  , NULL                AS adjustment_amount
-  , NULL                AS patient_payment_amount
+    -- metric fields
+    bli_billed as debit_amount,
+    null as credit_amount,
+    null as adjustment_amount,
+    null as patient_payment_amount
 
-FROM public_marts.mrt_daysheet_debits
+from {{ ref("mrt_daysheet_debits") }}
 
-UNION
+union distinct
 
-SELECT
-    --filter fields
-    'credit'         AS dtype
-  , doctor_id
-  , office_id
-  , bli_code
-  , practice_group_id
+select
+    -- filter fields
+    'credit' as daysheet_type,
+    {{ doctor_fields("c") }},
+    {{ office_fields("c") }},
+    bli_code,
+    practice_group_id,
+    null as dos,
+    null as debit_posted_date,
+    lit_created_at as ca_posted_date,
+    lit_posted_date as ca_check_date,
+    era_deposit_date as ca_deposit_date,
+    null as cash_posted_date,
+    null as cash_recieved_date,
 
-  , NULL             AS dos
-  , NULL             AS debit_posted_date
-  , lit_created_at   AS ca_posted_date
-  , lit_posted_date  AS ca_check_date
-  , era_deposit_date AS ca_deposit_date
-  , NULL             AS cash_posted_date
-  , NULL             AS cash_recieved_date
+    -- metric fields
+    null as debit_amount,
+    lit_ins_paid as credit_amount,
+    null as adjustment_amount,
+    null as patient_payment_amount
 
-    --metric fields
-  , NULL             AS debit_amount
-  , lit_ins_paid     AS credit_amount
-  , NULL             AS adjustment_amount
-  , NULL             AS patient_payment_amount
+from {{ ref("mrt_daysheet_credits") }}
 
-FROM public_marts.mrt_daysheet_credits
+union distinct
 
-UNION
+select
+    -- filter fields
+    'ajdustment' as daysheet_type,
+    {{ doctor_fields("a") }},
+    {{ office_fields("a") }},
+    bli_code,
+    practice_group_id,
+    null as dos,
+    null as debit_posted_date,
+    lit_created_at as ca_posted_date,
+    lit_posted_date as ca_check_date,
+    era_deposit_date as ca_deposit_date,
+    null as cash_posted_date,
+    null as cash_recieved_date,
 
-SELECT
-    --filter fields
-    'ajdustment'     AS dtype
-  , doctor_id
-  , office_id
-  , bli_code
-  , practice_group_id
+    -- metric fields
+    null as debit_amount,
+    null as credit_amount,
+    lit_adjustment as adjustment_amount,
+    null as patient_payment_amount
+from {{ ref("mrt_daysheet_adjustments") }}
 
-  , NULL             AS dos
-  , NULL             AS debit_posted_date
-  , lit_created_at   AS ca_posted_date
-  , lit_posted_date  AS ca_check_date
-  , era_deposit_date AS ca_deposit_date
-  , NULL             AS cash_posted_date
-  , NULL             AS cash_recieved_date
+union distinct
 
-    --metric fields
-  , NULL             AS debit_amount
-  , NULL             AS credit_amount
-  , lit_adjustment   AS adjustment_amount
-  , NULL             AS patient_payment_amount
-FROM public_marts.mrt_daysheet_adjustments
+select
+    -- filter fields
+    'cash' as daysheet_type,
+    {{ doctor_fields("p") }},
+    {{ office_fields("p") }},
+    bli_code,
+    practice_group_id,
+    null as dos,
+    null as debit_posted_date,
+    null as ca_posted_date,
+    null as ca_check_date,
+    null as ca_deposit_date,
+    posted_date as cash_posted_date,
+    received_date as cash_recieved_date,
 
-UNION
-
-SELECT
-    --filter fields
-    'cash'        AS dtype
-  , doctor_id
-  , office_id
-  , bli_code
-  , practice_group_id
-
-  , NULL          AS dos
-  , NULL          AS debit_posted_date
-  , NULL          AS ca_posted_date
-  , NULL          AS ca_check_date
-  , NULL          AS ca_deposit_date
-  , posted_date   AS cash_posted_date
-  , received_date AS cash_recieved_date
-
-    --metric fields
-  , NULL          AS debit_amount
-  , NULL          AS credit_amount
-  , NULL          AS adjustment_amount
-  , amount        AS patient_payment_amount
-FROM public_marts.mrt_daysheet_cashpayments
+    -- metric fields
+    null as debit_amount,
+    null as credit_amount,
+    null as adjustment_amount,
+    amount as patient_payment_amount
+from {{ ref("mrt_daysheet_cashpayments") }}

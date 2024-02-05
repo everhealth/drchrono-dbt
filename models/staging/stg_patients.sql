@@ -1,15 +1,15 @@
-SELECT
-    id                        AS patient_id
-  , chart_id                  AS patient_chart_id
-  , patient_payment_profile
-  , primary_insurance_company AS patient_primary_insurance_company
-  , first_name                AS patient_first_name
-  , middle_name               AS patient_middle_name
-  , last_name                 AS patient_last_name
-  , CASE
-        WHEN middle_name = ''
-            THEN first_name || ' ' || last_name
-        WHEN middle_name IS NOT NULL
-            THEN first_name || ' ' || middle_name || ' ' || last_name
-    END                       AS patient_full_name
-FROM {{source( 'chronometer_scrubbed', 'chronometer_patient' ) }}
+select
+    id as patient_id,
+    chart_id as patient_chart_id,
+    patient_payment_profile,
+    primary_insurance_company as patient_primary_insurance_company,
+    first_name as patient_first_name,
+    middle_name as patient_middle_name,
+    last_name as patient_last_name,
+    case
+        when middle_name = ''
+            then first_name || ' ' || last_name
+        when middle_name is not null
+            then first_name || ' ' || middle_name || ' ' || last_name
+    end as patient_fullname
+from {{ source("chronometer_scrubbed", "chronometer_patient") }}

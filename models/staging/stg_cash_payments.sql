@@ -1,4 +1,4 @@
-SELECT 
+select
     bcp.id as cashpayment_id,
     bcp.appointment_id,
     bcp.line_item_id,
@@ -12,4 +12,4 @@ SELECT
     bcp.patient_id,
     bcp.parent_id
 
-FROM {{source( 'chronometer_scrubbed', 'billing_cashpayment' ) }} bcp
+from {{ source("chronometer_scrubbed", "billing_cashpayment") }} as bcp
