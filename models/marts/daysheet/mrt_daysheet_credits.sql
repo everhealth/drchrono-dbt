@@ -1,4 +1,4 @@
-select *
+select lit.*
 from {{ ref("int_lineitems_transactions") }} as lit
 inner join
     {{ ref("stg_practice_group_options") }} as pgo

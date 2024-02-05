@@ -6,7 +6,7 @@
 
 SELECT
     bli.id
-  , {{doctor_fields(dd)}}
+  , {{doctor_fields("dd")}}
   , dd.practice_group_id
   , bli.balance_ins
   , bli.balance_pt

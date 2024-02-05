@@ -8,7 +8,7 @@ select
     {{ patient_fields("p") }},
     -- Doctor
     {{ doctor_fields("d") }},
-    cd.practice_group_id,
+    d.practice_group_id,
     -- office
     {{ office_fields("o") }}
     -- Appointment

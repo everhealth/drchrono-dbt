@@ -1,8 +1,7 @@
 select
-    *
-    end as include_era_payment_status
-from {{ ref("int_lineitems_transactions") }}
-inne join
+    lit.*
+from {{ ref("int_lineitems_transactions") }} lit
+inner join
     {{ ref("stg_practice_group_options") }} as pgo
     on lit.practice_group_id = pgo.practice_group_id
 where
