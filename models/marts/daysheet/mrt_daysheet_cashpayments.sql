@@ -15,9 +15,9 @@ select
     -- exam_room: ID and NAME
     a.examination_room as exam_room_id,
     {{ exam_room_name() }},
-    a.service_date_start_date,
-    a.service_date_end_date,
-    a.first_billed_date,
+    a.appt_service_date_start_date,
+    a.appt_service_date_end_date,
+    a.appt_first_billed_date,
     a.scheduled_time,
     a.institutional_claim_flag,
     bli.code as billing_code
