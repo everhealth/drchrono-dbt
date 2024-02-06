@@ -1,4 +1,6 @@
 # `drchrono-dbt`
+[![DBT CI](https://github.com/everhealth/drchrono-dbt/actions/workflows/dbt_ci.yml/badge.svg)](https://github.com/everhealth/drchrono-dbt/actions/workflows/dbt_ci.yml)
+
 [dbt](https://docs.getdbt.com/docs/introduction) brings software engineering best practices to data modeling.  
 This includes DRY, unit tests, versioning, and more. 
 
