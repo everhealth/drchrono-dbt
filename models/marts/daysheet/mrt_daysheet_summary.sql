@@ -1,8 +1,8 @@
 select
     -- filter fields
     'debit' as daysheet_type,
-    {{ doctor_fields("d") }},
-    {{ office_fields("d") }},
+    {{ doctor_fields("debits") }},
+    {{ office_fields("debits") }},
     billing_code,
     practice_group_id,
     appt_date_of_service as dos,
@@ -19,15 +19,15 @@ select
     null as adjustment_amount,
     null as patient_payment_amount
 
-from {{ ref("mrt_daysheet_debits") }} d
+from {{ ref("mrt_daysheet_debits") }} as debits
 
 union distinct
 
 select
     -- filter fields
     'credit' as daysheet_type,
-    {{ doctor_fields("c") }},
-    {{ office_fields("c") }},
+    {{ doctor_fields("credits") }},
+    {{ office_fields("credits") }},
     billing_code,
     practice_group_id,
     null as dos,
@@ -44,15 +44,15 @@ select
     null as adjustment_amount,
     null as patient_payment_amount
 
-from {{ ref("mrt_daysheet_credits") }} c
+from {{ ref("mrt_daysheet_credits") }} as credits
 
 union distinct
 
 select
     -- filter fields
-    'ajdustment' as daysheet_type,
-    {{ doctor_fields("a") }},
-    {{ office_fields("a") }},
+    'adjustment' as daysheet_type,
+    {{ doctor_fields("adjustments") }},
+    {{ office_fields("adjustments") }},
     billing_code,
     practice_group_id,
     null as dos,
@@ -68,15 +68,15 @@ select
     null as credit_amount,
     lit_adjustment as adjustment_amount,
     null as patient_payment_amount
-from {{ ref("mrt_daysheet_adjustments") }} a
+from {{ ref("mrt_daysheet_adjustments") }} adjustments
 
 union distinct
 
 select
     -- filter fields
     'cash' as daysheet_type,
-    {{ doctor_fields("p") }},
-    {{ office_fields("p") }},
+    {{ doctor_fields("patient_payments") }},
+    {{ office_fields("patient_payments") }},
     billing_code,
     practice_group_id,
     null as dos,
@@ -92,4 +92,4 @@ select
     null as credit_amount,
     null as adjustment_amount,
     amount as patient_payment_amount
-from {{ ref("mrt_daysheet_cashpayments") }} p
+from {{ ref("mrt_daysheet_cashpayments") }} patient_payments
