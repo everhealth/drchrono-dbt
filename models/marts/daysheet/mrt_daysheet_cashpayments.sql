@@ -26,7 +26,7 @@ left join
     {{ ref("stg_appointments") }} as a
     on bcp.appointment_id = a.appointment_id
 left join {{ ref("stg_doctors") }} as d on a.doctor_id = d.doctor_id
-left join {{ ref("stg_patients") }} as p on bcp.patient_id = p.patient_id
+left join {{ ref("stg_patients") }} as p on bcp.cashpayment_patient_id = p.patient_id
 left join {{ ref("stg_offices") }} as o on a.office_id = o.office_id
 left join
     {{ ref("stg_line_items") }} as bli
