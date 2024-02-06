@@ -1,8 +1,11 @@
 select *
 from {{ ref("int_lineitems") }}
 where
-    coalesce(appointment_status, '') not in (
-        'No Show', 'Cancelled', 'Rescheduled'
+    NOT (
+        COALESCE(appointment_status, '') = 'No Show'
+        AND procedure_type IN ('C', 'H', 'R')
     )
-    and bli_billed > 0
-    and datediff(day, bli_created_at, current_date) < 365
+    AND COALESCE(appointment_status, '') NOT IN ('Cancelled', 'Rescheduled')
+    AND billed > 0
+    AND DATEDIFF(day, created_at, CURRENT_DATE) < 365
+{{ apply_limit_if_test() }}

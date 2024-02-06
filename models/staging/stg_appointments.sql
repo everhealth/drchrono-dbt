@@ -37,3 +37,5 @@ where
     deleted_flag is false
     and appt_is_break is false
     and is_demo_data_appointment is false
+    and is_demo_data_patient is false
+
