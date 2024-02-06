@@ -10,7 +10,7 @@ select
     {{ doctor_fields("d") }},
     d.practice_group_id,
     -- office
-    {{ office_fields("o") }}
+    {{ office_fields("o") }},
     -- Appointment
     -- exam_room: ID and NAME
     a.examination_room as exam_room_id,
