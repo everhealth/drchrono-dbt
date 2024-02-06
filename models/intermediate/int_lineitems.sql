@@ -21,6 +21,7 @@ select
     a.appt_ins1_status,
     a.appt_ins2_status,
     a.appt_first_billed_date,
+    a.appt_scheduled_time,
     a.appt_last_billed_date,
     a.appt_claim_type,
     a.appt_submitted,

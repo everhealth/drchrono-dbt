@@ -19,7 +19,7 @@ select
     null as adjustment_amount,
     null as patient_payment_amount
 
-from {{ ref("mrt_daysheet_debits") }}
+from {{ ref("mrt_daysheet_debits") }} d
 
 union distinct
 
@@ -44,7 +44,7 @@ select
     null as adjustment_amount,
     null as patient_payment_amount
 
-from {{ ref("mrt_daysheet_credits") }}
+from {{ ref("mrt_daysheet_credits") }} c
 
 union distinct
 
@@ -68,7 +68,7 @@ select
     null as credit_amount,
     lit_adjustment as adjustment_amount,
     null as patient_payment_amount
-from {{ ref("mrt_daysheet_adjustments") }}
+from {{ ref("mrt_daysheet_adjustments") }} a
 
 union distinct
 
@@ -92,4 +92,4 @@ select
     null as credit_amount,
     null as adjustment_amount,
     amount as patient_payment_amount
-from {{ ref("mrt_daysheet_cashpayments") }}
+from {{ ref("mrt_daysheet_cashpayments") }} p
