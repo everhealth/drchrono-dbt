@@ -77,7 +77,7 @@ select
     'cash' as daysheet_type,
     {{ doctor_fields("p") }},
     {{ office_fields("p") }},
-    bli_code,
+    billing_code,
     practice_group_id,
     null as dos,
     null as debit_posted_date,
