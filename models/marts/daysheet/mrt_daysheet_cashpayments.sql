@@ -3,7 +3,16 @@
 
 select
     -- CashPayment
-    bcp.*,
+    bcp.cashpayment_id,
+    bcp.appointment_id,
+    bcp.line_item_id,
+    bcp.posted_date,
+    bcp.payment_date,
+    bcp.created_by_id,
+    bcp.amount,
+    bcp.trace_number,
+    bcp.payment_method,
+    bcp.parent_id,
     -- Patient
     {{ patient_fields("p") }},
     -- Doctor
@@ -14,7 +23,7 @@ select
     -- Appointment
     -- exam_room: ID and NAME
     a.examination_room as exam_room_id,
-    {{ exam_room_name() }},
+    {{ exam_room_name("a","o") }},
     a.appt_service_date_start_date,
     a.appt_service_date_end_date,
     a.appt_first_billed_date,
@@ -26,7 +35,9 @@ left join
     {{ ref("stg_appointments") }} as a
     on bcp.appointment_id = a.appointment_id
 left join {{ ref("stg_doctors") }} as d on a.doctor_id = d.doctor_id
-left join {{ ref("stg_patients") }} as p on bcp.cashpayment_patient_id = p.patient_id
+left join
+    {{ ref("stg_patients") }} as p
+    on bcp.patient_id = p.patient_id
 left join {{ ref("stg_offices") }} as o on a.office_id = o.office_id
 left join
     {{ ref("stg_line_items") }} as bli

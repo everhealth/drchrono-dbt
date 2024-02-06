@@ -3,7 +3,7 @@ select
     'debit' as daysheet_type,
     {{ doctor_fields("d") }},
     {{ office_fields("d") }},
-    bli_code,
+    billing_code,
     practice_group_id,
     appt_date_of_service as dos,
     bli_created_at as debit_posted_date,
@@ -11,7 +11,7 @@ select
     null as ca_check_date,
     null as ca_deposit_date,
     null as cash_posted_date,
-    null as cash_recieved_date,
+    null as cash_payment_date,
 
     -- metric fields
     bli_billed as debit_amount,
@@ -28,7 +28,7 @@ select
     'credit' as daysheet_type,
     {{ doctor_fields("c") }},
     {{ office_fields("c") }},
-    bli_code,
+    billing_code,
     practice_group_id,
     null as dos,
     null as debit_posted_date,
@@ -36,7 +36,7 @@ select
     lit_posted_date as ca_check_date,
     era_deposit_date as ca_deposit_date,
     null as cash_posted_date,
-    null as cash_recieved_date,
+    null as cash_payment_date,
 
     -- metric fields
     null as debit_amount,
@@ -53,7 +53,7 @@ select
     'ajdustment' as daysheet_type,
     {{ doctor_fields("a") }},
     {{ office_fields("a") }},
-    bli_code,
+    billing_code,
     practice_group_id,
     null as dos,
     null as debit_posted_date,
@@ -61,7 +61,7 @@ select
     lit_posted_date as ca_check_date,
     era_deposit_date as ca_deposit_date,
     null as cash_posted_date,
-    null as cash_recieved_date,
+    null as cash_payment_date,
 
     -- metric fields
     null as debit_amount,
@@ -85,7 +85,7 @@ select
     null as ca_check_date,
     null as ca_deposit_date,
     posted_date as cash_posted_date,
-    payment_date as cash_recieved_date,
+    payment_date as cash_payment_date,
 
     -- metric fields
     null as debit_amount,

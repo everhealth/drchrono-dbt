@@ -8,8 +8,8 @@ select
     bcp.amount,
     bcp.trace_number,
     bcp.payment_method,
-    bcp.doctor_id as cashpayment_doctor_id,
-    bcp.patient_id as cashpayment_patient_id,
+    bcp.doctor_id as doctor_id,
+    bcp.patient_id as patient_id,
     bcp.parent_id
 
 from {{ source("chronometer_scrubbed", "billing_cashpayment") }} as bcp
