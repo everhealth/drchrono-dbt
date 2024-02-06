@@ -1,5 +1,4 @@
 # `drchrono-dbt`
-[![DBT CI](https://github.com/everhealth/drchrono-dbt/actions/workflows/dbt_ci.yml/badge.svg)](https://github.com/everhealth/drchrono-dbt/actions/workflows/dbt_ci.yml)
 
 [dbt](https://docs.getdbt.com/docs/introduction) brings software engineering best practices to data modeling.  
 This includes DRY, unit tests, versioning, and more. 
@@ -14,7 +13,7 @@ Commands to get started:
 
 You can also specify profiles on-the-fly (these are maintained in `/.dbt/profiles.yml`), as well as targets (staging vs. prod) using these args:
 ```bash
-docker compose run dbt debug --profile redshift_reoprts -t staging
+docker compose run dbt debug --profile redshift_reports -t staging
 ```
 
 <details>
