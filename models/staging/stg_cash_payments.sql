@@ -8,7 +8,7 @@ select
     bcp.amount,
     bcp.trace_number,
     bcp.payment_method,
-    bcp.doctor_id,
+    bcp.doctor_id as cashpayment_doctor_id,
     bcp.patient_id as cashpayment_patient_id,
     bcp.parent_id
 
