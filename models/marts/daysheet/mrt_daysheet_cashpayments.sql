@@ -1,4 +1,4 @@
-{{ config(SORT=["doctor_id", "posted_date", "scheduled_time"]) }}
+{{ config(SORT=["doctor_id", "posted_date", "appt_date_of_service"]) }}
 
 
 select
@@ -18,8 +18,8 @@ select
     a.appt_service_date_start_date,
     a.appt_service_date_end_date,
     a.appt_first_billed_date,
-    a.scheduled_time,
-    a.institutional_claim_flag,
+    a.appt_date_of_service,
+    a.appt_institutional_claim_flag,
     bli.code as billing_code
 from {{ ref("stg_cash_payments") }} as bcp
 left join
