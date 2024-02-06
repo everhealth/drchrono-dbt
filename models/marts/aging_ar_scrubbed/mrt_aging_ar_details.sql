@@ -6,7 +6,7 @@
 
 SELECT
     bli.id
-  , ca.doctor_id
+  , {{doctor_fields("dd")}}
   , dd.practice_group_id
   , bli.balance_ins
   , bli.balance_pt
@@ -22,7 +22,6 @@ SELECT
   , bli.from_date
   , bli.to_date
   , bli.appointment_id
-  , dd.firstname || ' ' || dd.lastname            AS doctor_name
   , CASE
         WHEN DATEDIFF( 'day', ca.first_billed_date, CURRENT_DATE ) BETWEEN 0 AND 30
             THEN 'a. 0-30 days'
@@ -43,5 +42,5 @@ LEFT JOIN {{ source('chronometer_scrubbed', 'chronometer_appointment') }} ca
 ON ca.id = bli.appointment_id
     LEFT JOIN {{ source('chronometer_scrubbed', 'billing_cashpayment') }} bcp
     ON bcp.line_item_id = bli.id
-    JOIN {{ source('chronometer_scrubbed', 'chronometer_doctor') }} dd
-    ON ca.doctor_id = dd.id
+    JOIN {{ ref('stg_doctors') }} dd
+    ON ca.doctor_id = dd.doctor_id

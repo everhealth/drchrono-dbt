@@ -237,6 +237,7 @@ sources:
       - name: chronometer_office
       - name: chronometer_patient
       - name: chronometer_simpledrpayerenrollment
+      - name: chronometer_practicegroupoptions
   - name: chronometer_scrubbed
     schema: public_chronometer_scrubbed
     tables:
@@ -249,3 +250,4 @@ sources:
       - name: chronometer_doctor
       - name: chronometer_office
       - name: chronometer_patient
+      

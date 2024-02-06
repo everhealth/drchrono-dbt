@@ -1,58 +1,49 @@
-{{ config(
-    sort = ['doctor_id', 'posted_date', 'scheduled_time']
-) }}
+{{ config(SORT=["doctor_id", "posted_date", "appt_date_of_service"]) }}
 
 
-SELECT
+select
     -- CashPayment
-    bcp.*,
+    bcp.cashpayment_id,
+    bcp.appointment_id,
+    bcp.line_item_id,
+    bcp.posted_date,
+    bcp.payment_date,
+    bcp.created_by_id,
+    bcp.amount,
+    bcp.trace_number,
+    bcp.payment_method,
+    bcp.parent_id,
     -- Patient
-    cp.first_name AS patient_first_name,
-    cp.middle_name AS patient_middle_name,
-    cp.last_name AS patient_last_name,
-    cp.chart_id AS patient_chart_id,
-    co.name AS office_name,
+    {{ patient_fields("p") }},
     -- Doctor
-    cd.firstname AS doctor_first_name,
-    cd.lastname AS doctor_last_name,
-    cd.salutation AS doctor_salutation,
-    cd.suffix AS doctor_suffix,
-    cd.practice_group_id,
+    {{ doctor_fields("d") }},
+    d.practice_group_id,
+    -- office
+    {{ office_fields("o") }},
     -- Appointment
     -- exam_room: ID and NAME
-    ca.examination_room AS exam_room_id,
-    {{ exam_room_name() }},
-    ca.service_date_start_date,
-    ca.service_date_end_date,
-    ca.first_billed_date,
-    ca.scheduled_time,
-    ca.institutional_claim_flag,
+    a.examination_room as exam_room_id,
+    {{ exam_room_name("a","o") }},
+    a.appt_service_date_start_date,
+    a.appt_service_date_end_date,
+    a.appt_first_billed_date,
+    a.appt_date_of_service,
+    a.appt_institutional_claim_flag,
     bli.code as billing_code
-FROM
-    {{ ref('int_cashpayments') }} bcp
-    LEFT JOIN {{source( 'chronometer_scrubbed', 'chronometer_appointment' ) }} ca
-    ON (
-        bcp.appointment_id = ca.id
-        AND ca.deleted_flag IS FALSE
-        AND ca.is_demo_data_appointment IS FALSE
-        AND ca.appt_is_break IS FALSE
-        AND COALESCE(ca.appointment_status,'') NOT IN ('Cancelled', 'Rescheduled')
-    )
-    JOIN {{ source( 'chronometer_scrubbed','chronometer_doctor') }} cd
-    ON (
-        ca.doctor_id = cd.id
-    )
-    JOIN {{source( 'chronometer_scrubbed', 'chronometer_patient' ) }} cp
-    ON (
-        bcp.patient_id = cp.id
-    )
-    JOIN {{source( 'chronometer_scrubbed', 'chronometer_office') }} co
-    ON (
-        ca.office_id = co.id
-    )
-    LEFT JOIN {{source( 'chronometer_scrubbed', 'billing_billinglineitem' ) }} bli
-    ON (
-        bcp.line_item_id = bli.id
-    )
-WHERE
-    amount <> 0
+from {{ ref("stg_cash_payments") }} as bcp
+left join
+    {{ ref("stg_appointments") }} as a
+    on bcp.appointment_id = a.appointment_id
+left join {{ ref("stg_doctors") }} as d on a.doctor_id = d.doctor_id
+left join
+    {{ ref("stg_patients") }} as p
+    on bcp.patient_id = p.patient_id
+left join {{ ref("stg_offices") }} as o on a.office_id = o.office_id
+left join
+    {{ ref("stg_line_items") }} as bli
+    on bcp.line_item_id = bli.line_item_id
+
+where
+    bcp.amount != 0
+    and coalesce(a.appointment_status, '') not in ('Cancelled', 'Rescheduled')
+    and datediff(day, bcp.posted_date, current_date) < 365

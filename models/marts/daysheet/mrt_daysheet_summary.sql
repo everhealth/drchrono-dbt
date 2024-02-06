@@ -1,0 +1,95 @@
+select
+    -- filter fields
+    'debit' as daysheet_type,
+    {{ doctor_fields("d") }},
+    {{ office_fields("d") }},
+    billing_code,
+    practice_group_id,
+    appt_date_of_service as dos,
+    bli_created_at as debit_posted_date,
+    null as ca_posted_date,
+    null as ca_check_date,
+    null as ca_deposit_date,
+    null as cash_posted_date,
+    null as cash_payment_date,
+
+    -- metric fields
+    bli_billed as debit_amount,
+    null as credit_amount,
+    null as adjustment_amount,
+    null as patient_payment_amount
+
+from {{ ref("mrt_daysheet_debits") }} d
+
+union distinct
+
+select
+    -- filter fields
+    'credit' as daysheet_type,
+    {{ doctor_fields("c") }},
+    {{ office_fields("c") }},
+    billing_code,
+    practice_group_id,
+    null as dos,
+    null as debit_posted_date,
+    lit_created_at as ca_posted_date,
+    lit_posted_date as ca_check_date,
+    era_deposit_date as ca_deposit_date,
+    null as cash_posted_date,
+    null as cash_payment_date,
+
+    -- metric fields
+    null as debit_amount,
+    lit_ins_paid as credit_amount,
+    null as adjustment_amount,
+    null as patient_payment_amount
+
+from {{ ref("mrt_daysheet_credits") }} c
+
+union distinct
+
+select
+    -- filter fields
+    'ajdustment' as daysheet_type,
+    {{ doctor_fields("a") }},
+    {{ office_fields("a") }},
+    billing_code,
+    practice_group_id,
+    null as dos,
+    null as debit_posted_date,
+    lit_created_at as ca_posted_date,
+    lit_posted_date as ca_check_date,
+    era_deposit_date as ca_deposit_date,
+    null as cash_posted_date,
+    null as cash_payment_date,
+
+    -- metric fields
+    null as debit_amount,
+    null as credit_amount,
+    lit_adjustment as adjustment_amount,
+    null as patient_payment_amount
+from {{ ref("mrt_daysheet_adjustments") }} a
+
+union distinct
+
+select
+    -- filter fields
+    'cash' as daysheet_type,
+    {{ doctor_fields("p") }},
+    {{ office_fields("p") }},
+    billing_code,
+    practice_group_id,
+    null as dos,
+    null as debit_posted_date,
+    null as ca_posted_date,
+    null as ca_check_date,
+    null as ca_deposit_date,
+    posted_date as cash_posted_date,
+    payment_date as cash_payment_date,
+
+    -- metric fields
+    null as debit_amount,
+    null as credit_amount,
+    null as adjustment_amount,
+    amount as patient_payment_amount
+from {{ ref("mrt_daysheet_cashpayments") }} p
