@@ -4,6 +4,7 @@ select
     doctor_id,
     office_id,
     patient_id,
+    examination_room,
     scheduled_time::date as appt_date_of_service,
     appointment_profile_id as appt_appointment_profile_id,
     appt_is_break as appt_appt_is_break,

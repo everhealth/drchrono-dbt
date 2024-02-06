@@ -33,5 +33,5 @@ left join
     on bcp.line_item_id = bli.line_item_id
 
 where
-    amount != 0
+    bcp.amount != 0
     and coalesce(a.appointment_status, '') not in ('Cancelled', 'Rescheduled')
