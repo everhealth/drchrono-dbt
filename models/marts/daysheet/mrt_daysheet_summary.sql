@@ -85,7 +85,7 @@ select
     null as ca_check_date,
     null as ca_deposit_date,
     posted_date as cash_posted_date,
-    received_date as cash_recieved_date,
+    payment_date as cash_recieved_date,
 
     -- metric fields
     null as debit_amount,
