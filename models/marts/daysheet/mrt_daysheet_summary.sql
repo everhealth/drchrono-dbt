@@ -5,7 +5,7 @@ select
     {{ office_fields("d") }},
     bli_code,
     practice_group_id,
-    appt_scheduled_time as dos,
+    appt_date_of_service as dos,
     bli_created_at as debit_posted_date,
     null as ca_posted_date,
     null as ca_check_date,
@@ -19,7 +19,7 @@ select
     null as adjustment_amount,
     null as patient_payment_amount
 
-from {{ ref("mrt_daysheet_debits") }}
+from {{ ref("mrt_daysheet_debits") }} d
 
 union distinct
 
@@ -44,7 +44,7 @@ select
     null as adjustment_amount,
     null as patient_payment_amount
 
-from {{ ref("mrt_daysheet_credits") }}
+from {{ ref("mrt_daysheet_credits") }} c
 
 union distinct
 
@@ -68,7 +68,7 @@ select
     null as credit_amount,
     lit_adjustment as adjustment_amount,
     null as patient_payment_amount
-from {{ ref("mrt_daysheet_adjustments") }}
+from {{ ref("mrt_daysheet_adjustments") }} a
 
 union distinct
 
@@ -77,7 +77,7 @@ select
     'cash' as daysheet_type,
     {{ doctor_fields("p") }},
     {{ office_fields("p") }},
-    bli_code,
+    billing_code,
     practice_group_id,
     null as dos,
     null as debit_posted_date,
@@ -85,11 +85,11 @@ select
     null as ca_check_date,
     null as ca_deposit_date,
     posted_date as cash_posted_date,
-    received_date as cash_recieved_date,
+    payment_date as cash_recieved_date,
 
     -- metric fields
     null as debit_amount,
     null as credit_amount,
     null as adjustment_amount,
     amount as patient_payment_amount
-from {{ ref("mrt_daysheet_cashpayments") }}
+from {{ ref("mrt_daysheet_cashpayments") }} p

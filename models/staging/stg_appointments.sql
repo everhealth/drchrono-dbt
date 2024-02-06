@@ -4,6 +4,7 @@ select
     doctor_id,
     office_id,
     patient_id,
+    examination_room,
     scheduled_time::date as appt_date_of_service,
     appointment_profile_id as appt_appointment_profile_id,
     appt_is_break as appt_appt_is_break,
@@ -27,6 +28,8 @@ select
     supervising_provider_id as appt_supervising_provider_id,
     convert_timezone('PST', 'UTC', first_billed_date) as appt_first_billed_date,
     convert_timezone('PST', 'UTC', last_billed_date) as appt_last_billed_date,
+    convert_timezone('PST', 'UTC', service_date_start_date) as appt_service_date_start_date,
+    convert_timezone('PST', 'UTC', service_date_end_date) as appt_service_date_end_date,
     convert_timezone('PST', 'UTC', created_at) as appt_created_at
 
 from {{ source("chronometer_scrubbed", "chronometer_appointment") }}
