@@ -5,7 +5,7 @@ select
     {{ office_fields("d") }},
     bli_code,
     practice_group_id,
-    appt_scheduled_time as dos,
+    appt_date_of_service as dos,
     bli_created_at as debit_posted_date,
     null as ca_posted_date,
     null as ca_check_date,
