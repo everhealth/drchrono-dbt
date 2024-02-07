@@ -29,12 +29,16 @@ select
     a.appt_first_billed_date,
     a.appt_date_of_service,
     a.appt_institutional_claim_flag,
-    bli.code as billing_code
+    bli.code as billing_code,
+    appt_primary_insurer_company as ins_info_name,
+    appt_primary_insurer_payer_id as ins_info_payer_id
 from {{ ref("stg_cash_payments") }} as bcp
 left join
     {{ ref("stg_appointments") }} as a
     on bcp.appointment_id = a.appointment_id
-left join {{ ref("stg_doctors") }} as d on a.doctor_id = d.doctor_id
+left join
+    {{ ref("stg_doctors") }} as d
+    on coalesce(a.doctor_id, bcp.doctor_id) = d.doctor_id
 left join
     {{ ref("stg_patients") }} as p
     on bcp.patient_id = p.patient_id
