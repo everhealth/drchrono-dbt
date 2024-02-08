@@ -73,8 +73,8 @@ select
 from {{ ref("stg_line_items") }} as bli
 left join
     {{ ref("stg_appointments") }} as a
-    on bli.appointment_id = a.appointment_id
-left join {{ ref("stg_doctors") }} as d on a.doctor_id = d.doctor_id
+    on bli.appointment_id = a.appointment_id {{ days_ago("a.updated_at") }}
+left join {{ ref("stg_doctors") }} as d on a.doctor_id = d.doctor_id and {{ filter_pg("d")}}
 left join {{ ref("stg_offices") }} as o on a.office_id = o.office_id
 left join {{ ref("stg_patients") }} as p on a.patient_id = p.patient_id
 where bli.appointment_id is null or a.appointment_id is not null
