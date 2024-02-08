@@ -23,8 +23,8 @@ redshift_reports:
       host: "{{ env_var('REDSHIFT_HOST_REPORTING_STG') }}"
       password: "{{ env_var('REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
       port: 5439
-      schema: "{{ env_var('WAREHOUSE_SCHEMA_NAME', 'public') }}"
+      schema: "{{ env_var('WAREHOUSE_SCHEMA_NAME', 'dbt_awick') }}"
       threads: 2
       type: redshift
-      user: reports_user
+      user: "{{ env_var('REDSHIFT_USER_STG', 'reports_user') }}"
   target: staging
