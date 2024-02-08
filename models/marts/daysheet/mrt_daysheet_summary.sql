@@ -11,6 +11,8 @@ select
     exam_room_name,
     billing_code,
     practice_group_id,
+
+    --dates
     appt_date_of_service as dos,
     bli_created_at as debit_posted_date,
     null as ca_posted_date,
@@ -40,6 +42,8 @@ select
     exam_room_name,
     billing_code,
     practice_group_id,
+    
+    --dates
     null as dos,
     null as debit_posted_date,
     lit_created_at as ca_posted_date,
@@ -69,6 +73,8 @@ select
     exam_room_name,
     billing_code,
     practice_group_id,
+    
+    --dates
     null as dos,
     null as debit_posted_date,
     lit_created_at as ca_posted_date,
@@ -97,6 +103,8 @@ select
     exam_room_name,
     billing_code,
     practice_group_id,
+    
+    --dates
     null as dos,
     null as debit_posted_date,
     null as ca_posted_date,
