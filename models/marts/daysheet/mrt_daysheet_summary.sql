@@ -1,10 +1,18 @@
+{{ config(SORT=["practice_group_id", "doctor_id"]) }} 
+
 select
     -- filter fields
     'debit' as daysheet_type,
     {{ doctor_fields("debits") }},
     {{ office_fields("debits") }},
+    {{ patient_fields("debits") }},
+    ins_info_name,
+    ins_info_payer_id,
+    exam_room_name,
     billing_code,
     practice_group_id,
+
+    --dates
     appt_date_of_service as dos,
     bli_created_at as debit_posted_date,
     null as ca_posted_date,
@@ -28,8 +36,14 @@ select
     'credit' as daysheet_type,
     {{ doctor_fields("credits") }},
     {{ office_fields("credits") }},
+    {{ patient_fields("credits") }},
+    ins_info_name,
+    ins_info_payer_id,
+    exam_room_name,
     billing_code,
     practice_group_id,
+    
+    --dates
     null as dos,
     null as debit_posted_date,
     lit_created_at as ca_posted_date,
@@ -53,8 +67,14 @@ select
     'adjustment' as daysheet_type,
     {{ doctor_fields("adjustments") }},
     {{ office_fields("adjustments") }},
+    {{ patient_fields("adjustments") }},
+    ins_info_name,
+    ins_info_payer_id,
+    exam_room_name,
     billing_code,
     practice_group_id,
+    
+    --dates
     null as dos,
     null as debit_posted_date,
     lit_created_at as ca_posted_date,
@@ -68,7 +88,7 @@ select
     null as credit_amount,
     lit_adjustment as adjustment_amount,
     null as patient_payment_amount
-from {{ ref("mrt_daysheet_adjustments") }} adjustments
+from {{ ref("mrt_daysheet_adjustments") }} as adjustments
 
 union distinct
 
@@ -77,8 +97,14 @@ select
     'cash' as daysheet_type,
     {{ doctor_fields("patient_payments") }},
     {{ office_fields("patient_payments") }},
+    {{ patient_fields("patient_payments") }},
+    ins_info_name,
+    ins_info_payer_id,
+    exam_room_name,
     billing_code,
     practice_group_id,
+    
+    --dates
     null as dos,
     null as debit_posted_date,
     null as ca_posted_date,
@@ -92,4 +118,4 @@ select
     null as credit_amount,
     null as adjustment_amount,
     amount as patient_payment_amount
-from {{ ref("mrt_daysheet_cashpayments") }} patient_payments
+from {{ ref("mrt_daysheet_cashpayments") }} as patient_payments

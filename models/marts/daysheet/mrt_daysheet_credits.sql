@@ -1,3 +1,5 @@
+{{ config(SORT=["practice_group_id", "doctor_id"]) }}
+
 select lit.*
 from {{ ref("int_lineitems_transactions") }} as lit
 inner join

@@ -15,10 +15,18 @@ select
     lit.lit_code,
     lit.lit_status,
     lit.lit_is_archived,
-    lit.lit_ins_idx
+    lit.lit_ins_idx,
+    case
+        when lit_ins_idx = 1 then ali.appt_primary_insurer_company
+        when lit_ins_idx = 2 then ali.appt_secondary_insurer_company
+    end as ins_info_name,
+    case
+        when lit_ins_idx = 1 then ali.appt_primary_insurer_payer_id
+        when lit_ins_idx = 2 then ali.appt_secondary_insurer_payer_id
+    end as ins_info_payer_id
 from {{ ref("stg_line_item_transactions") }} as lit
 left join
     {{ ref("int_lineitems") }} as ali
     on lit.line_item_id = ali.line_item_id
 left join {{ ref("stg_era_objects") }} as era on lit.lit_era_id = era.era_id
-where lit.line_item_id is null or ali.line_item_id is not null
+where lit.line_item_id is NULL or ali.line_item_id is not NULL
