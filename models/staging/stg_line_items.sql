@@ -21,4 +21,4 @@ select
     appointment_id,
     coalesce(billed, 0) as billed,
     convert_timezone('EST', 'UTC', created_at) as created_at
-from {{ source("chronometer_scrubbed", "billing_billinglineitem") }}
+from {{ source("chronometer_production", "billing_billinglineitem") }}

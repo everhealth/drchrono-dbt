@@ -37,9 +37,11 @@ dispatch:
 models:
   drc_redshift_reports:
     staging:
+      tags: ["run_for_prs"]
       +materialized: view
       +schema: "{{ var('schema_override', 'staging') }}"
     intermediate:
+      tags: ["run_for_prs"]
       +materialized: view
       +schema: "{{ var('schema_override', 'intermediate') }}"
     marts:

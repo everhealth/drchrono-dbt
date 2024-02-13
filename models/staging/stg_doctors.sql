@@ -10,5 +10,5 @@ select
         when suffix is not null then ', ' || suffix else ''
     end as doc_fullname
 
-from {{ source("chronometer_scrubbed", "chronometer_doctor") }} d
+from {{ source("chronometer_production", "chronometer_doctor") }} d
 WHERE {{ filter_pg("d")}}

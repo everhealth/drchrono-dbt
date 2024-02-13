@@ -12,4 +12,4 @@ select
     bcp.patient_id as patient_id,
     bcp.parent_id
 
-from {{ source("chronometer_scrubbed", "billing_cashpayment") }} as bcp
+from {{ source("chronometer_production", "billing_cashpayment") }} as bcp
