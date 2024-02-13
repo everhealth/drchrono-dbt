@@ -33,4 +33,4 @@ FROM
 CROSS JOIN
     date_type_choices AS dt
 ORDER BY
-    dg.practice_group_id, dg.doctor_id, dt.debits_date_type, dt.credits_date_type;
+    dg.practice_group_id, dg.doctor_id, dt.debits_date_type, dt.credits_date_type
