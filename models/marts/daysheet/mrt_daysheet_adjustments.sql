@@ -19,7 +19,7 @@ where
     -- interest, 1 = deductible, 2 = coinsurance, 3 = copayment
     and lit_ins_paid = 0
     and lit_is_archived is false
-    and datediff(day, lit_created_at, current_date) < 365
+    and datediff(day, GREATEST(lit_created_at,lit_posted_date, era_deposit_date) , current_date) < 365
     and (era_is_verified or not pgo.verify_era_before_post)
 {{ apply_limit_if_test() }}
 
