@@ -33,7 +33,7 @@ select
     convert_timezone('PST', 'UTC', service_date_end_date) as appt_service_date_end_date,
     convert_timezone('PST', 'UTC', created_at) as appt_created_at
 
-from {{ source("chronometer_scrubbed", "chronometer_appointment") }}
+from {{ source("chronometer_production", "chronometer_appointment") }}
 where
     deleted_flag is false
     and appt_is_break is false

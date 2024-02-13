@@ -10,4 +10,4 @@ select
     convert_timezone('EST', 'UTC', created_at) as era_created_at,
     convert_timezone('EST', 'UTC', updated_at) as era_updated_at,
     convert_timezone('EST', 'UTC', deposit_date) as era_deposit_date
-from {{ source("chronometer_scrubbed", "billing_eraobject") }}
+from {{ source("chronometer_production", "billing_eraobject") }}

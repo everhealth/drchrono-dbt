@@ -12,5 +12,5 @@ select
         when middle_name is not null
             then first_name || ' ' || middle_name || ' ' || last_name
     end as patient_fullname
-from {{ source("chronometer_scrubbed", "chronometer_patient") }}
+from {{ source("chronometer_production", "chronometer_patient") }}
 WHERE is_demo_data_patient is false

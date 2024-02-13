@@ -16,4 +16,4 @@ select
     ins_idx as lit_ins_idx,
     convert_timezone('EST', 'UTC', posted_date) as lit_posted_date,
     convert_timezone('EST', 'UTC', created_at) as lit_created_at
-from {{ source("chronometer_scrubbed", "billing_lineitemtransaction") }}
+from {{ source("chronometer_production", "billing_lineitemtransaction") }}

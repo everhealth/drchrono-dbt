@@ -19,4 +19,4 @@ select
     exam_room_13_name,
     exam_room_14_name,
     exam_room_15_name
-from {{ source("chronometer_scrubbed", "chronometer_office") }}
+from {{ source("chronometer_production", "chronometer_office") }}
