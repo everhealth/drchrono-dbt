@@ -21,11 +21,11 @@ SELECT
      END)                                      AS ar_bucket
   , NULLIF( SUM( bli.balance_pt * 1 ), NULL )  AS patient_ar
   , NULLIF( SUM( bli.balance_ins * 1 ), NULL ) AS insurance_ar
-FROM {{ source( 'chronometer_scrubbed', 'billing_billinglineitem' ) }} bli
-LEFT JOIN {{ source('chronometer_scrubbed','chronometer_appointment') }} ca
+FROM {{ source( 'chronometer_production', 'billing_billinglineitem' ) }} bli
+LEFT JOIN {{ source('chronometer_production','chronometer_appointment') }} ca
 ON ca.id = bli.appointment_id
-    LEFT JOIN {{ source('chronometer_scrubbed','billing_cashpayment') }} bcp
+    LEFT JOIN {{ source('chronometer_production','billing_cashpayment') }} bcp
     ON bcp.line_item_id = bli.id
-    JOIN {{ source('chronometer_scrubbed','chronometer_doctor') }} dd
+    JOIN {{ source('chronometer_production','chronometer_doctor') }} dd
     ON ca.doctor_id = dd.id
 GROUP BY 1, 2, 3, 4

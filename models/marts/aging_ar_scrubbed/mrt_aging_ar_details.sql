@@ -37,10 +37,10 @@ SELECT
   , DATE_TRUNC( 'quarter', ca.first_billed_date ) AS quarter_bucket
   , ca.scheduled_time
 
-FROM {{ source( 'chronometer_scrubbed', 'billing_billinglineitem' ) }} bli
-LEFT JOIN {{ source('chronometer_scrubbed', 'chronometer_appointment') }} ca
+FROM {{ source( 'chronometer_production', 'billing_billinglineitem' ) }} bli
+LEFT JOIN {{ source('chronometer_production', 'chronometer_appointment') }} ca
 ON ca.id = bli.appointment_id
-    LEFT JOIN {{ source('chronometer_scrubbed', 'billing_cashpayment') }} bcp
+    LEFT JOIN {{ source('chronometer_production', 'billing_cashpayment') }} bcp
     ON bcp.line_item_id = bli.id
     JOIN {{ ref('stg_doctors') }} dd
     ON ca.doctor_id = dd.doctor_id
