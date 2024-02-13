@@ -12,5 +12,5 @@ where
     )
     and COALESCE(appointment_status, '') not in ('Cancelled', 'Rescheduled')
     and bli_billed > 0
-    and DATEDIFF(day, bli_created_at, CURRENT_DATE) < 365
+    and DATEDIFF(day, GREATEST(bli_created_at, appt_date_of_service), CURRENT_DATE) < 365
 {{ apply_limit_if_test() }}

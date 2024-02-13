@@ -50,5 +50,5 @@ left join
 where
     bcp.amount != 0
     and coalesce(a.appointment_status, '') not in ('Cancelled', 'Rescheduled')
-    and datediff(day, bcp.posted_date, current_date) < 365
+    and datediff(day, GREATEST(bcp.posted_date, bcp.payment_date), current_date) < 365
 {{ apply_limit_if_test() }}

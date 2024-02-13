@@ -55,5 +55,8 @@ models:
     admin:
       +materialized: table
       +schema: "{{ var('schema_override', 'admin') }}"
+    util:
+      +materialized: table
+      +schema: "{{ var('schema_override', 'util') }}"
   dbt_project_evaluator:
     +schema: project_eval
