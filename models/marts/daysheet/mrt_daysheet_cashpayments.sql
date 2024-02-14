@@ -1,4 +1,8 @@
-{{ config(SORT=["doctor_id", "posted_date", "appt_date_of_service"]) }}
+{{ config(
+        SORT=["doctor_id", "posted_date", "appt_date_of_service"],
+        materialized='incremental'
+    ) 
+}}
 
 
 select
@@ -51,4 +55,7 @@ where
     bcp.amount != 0
     and coalesce(a.appointment_status, '') not in ('Cancelled', 'Rescheduled')
     and datediff(day, GREATEST(bcp.posted_date, bcp.payment_date), current_date) < 365
+    {% if is_incremental() %}
+        and bcp.posted_date > (select max(bcp.posted_date) from {{ this }})
+    {% endif %}
 {{ apply_limit_if_test() }}
