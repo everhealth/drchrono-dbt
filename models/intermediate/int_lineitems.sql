@@ -66,7 +66,7 @@ select
     {{ patient_fields("p") }},
     p.patient_primary_insurance_company,
     -- doctor
-    {{ doctor_fields("d") }},
+    {{ doctor_fields() }},
     d.practice_group_id,
     d.doc_verify_era_before_post
 

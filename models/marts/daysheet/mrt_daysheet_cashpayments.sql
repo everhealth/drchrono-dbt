@@ -20,7 +20,7 @@ select
     -- Patient
     {{ patient_fields("p") }},
     -- Doctor
-    {{ doctor_fields("d") }},
+    {{ doctor_fields() }},
     d.practice_group_id,
     -- office
     {{ office_fields("o") }},
