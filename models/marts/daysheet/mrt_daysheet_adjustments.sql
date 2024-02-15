@@ -30,7 +30,13 @@ where
     and datediff(day, GREATEST(lit_created_at,lit_posted_date, era_deposit_date) , current_date) < 365
     and (era_is_verified or not pgo.verify_era_before_post)
     {% if is_incremental() %}
-        and lit_created_at > (select max(lit_created_at) from {{ this }})
+        and (li_updated_at> (select max(li_updated_at) from {{ this }})
+            or    appt_updated_at> (select max(appt_updated_at) from {{ this }})
+            or    doc_updated_at> (select max(doc_updated_at) from {{ this }})
+            or    office_updated_at> (select max(office_updated_at) from {{ this }})
+            or    patient_updated_at> (select max(patient_updated_at) from {{ this }})
+            or    lit_updated_at> (select max(lit_updated_at) from {{ this }})
+            or    era_updated_at> (select max(era_updated_at) from {{ this }}))
     {% endif %}
 {{ apply_limit_if_test() }}
 

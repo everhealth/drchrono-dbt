@@ -68,13 +68,21 @@ select
     -- doctor
     {{ doctor_fields("d") }},
     d.practice_group_id,
-    d.doc_verify_era_before_post
+    d.doc_verify_era_before_post,
+    --updates
+    bli.li_updated_at, 
+    a.appt_updated_at, 
+    d.doc_updated_at, 
+    o.office_updated_at, 
+    p.patient_updated_at
 
 from {{ ref("stg_line_items") }} as bli
 left join
     {{ ref("stg_appointments") }} as a
     on bli.appointment_id = a.appointment_id {{ days_ago("a.updated_at") }}
-left join {{ ref("stg_doctors") }} as d on a.doctor_id = d.doctor_id and {{ filter_pg("d")}}
+left join
+    {{ ref("stg_doctors") }} as d
+    on a.doctor_id = d.doctor_id and {{ filter_pg("d")}}
 left join {{ ref("stg_offices") }} as o on a.office_id = o.office_id
 left join {{ ref("stg_patients") }} as p on a.patient_id = p.patient_id
 where bli.appointment_id is null or a.appointment_id is not null

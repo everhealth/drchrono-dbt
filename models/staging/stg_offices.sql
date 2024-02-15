@@ -18,5 +18,7 @@ select
     exam_room_12_name,
     exam_room_13_name,
     exam_room_14_name,
-    exam_room_15_name
+    exam_room_15_name,
+    updated_at as office_updated_at
 from {{ source("chronometer_production", "chronometer_office") }}
+WHERE _fivetran_deleted is false

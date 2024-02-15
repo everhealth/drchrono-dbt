@@ -15,5 +15,7 @@ select
     is_archived as lit_is_archived,
     ins_idx as lit_ins_idx,
     convert_timezone('EST', 'UTC', posted_date) as lit_posted_date,
-    convert_timezone('EST', 'UTC', created_at) as lit_created_at
+    convert_timezone('EST', 'UTC', created_at) as lit_created_at,
+    updated_at as lit_updated_at
 from {{ source("chronometer_production", "billing_lineitemtransaction") }}
+WHERE _fivetran_deleted is false

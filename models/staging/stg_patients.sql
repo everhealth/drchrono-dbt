@@ -11,6 +11,8 @@ select
             then first_name || ' ' || last_name
         when middle_name is not null
             then first_name || ' ' || middle_name || ' ' || last_name
-    end as patient_fullname
+    end as patient_fullname,
+    updated_at as patient_updated_at
 from {{ source("chronometer_production", "chronometer_patient") }}
 WHERE is_demo_data_patient is false
+and _fivetran_deleted is false
