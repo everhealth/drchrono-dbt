@@ -72,32 +72,45 @@ WITH fresh_data AS (
         < 365
 )
 
-
 {% if is_incremental() %}
-,max_updated_at AS (
-    SELECT
-        max(li_updated_at) AS max_li_updated_at,
-        max(appt_updated_at) AS max_appt_updated_at,
-        max(doc_updated_at) AS max_doc_updated_at,
-        max(office_updated_at) AS max_office_updated_at,
-        max(patient_updated_at) AS max_patient_updated_at,
-        max(cash_updated_at) AS max_cash_updated_at
-    FROM {{ this }}
-)
+    , max_updated_at AS (
+        SELECT
+            MAX(li_updated_at) AS max_li_updated_at,
+            MAX(appt_updated_at) AS max_appt_updated_at,
+            MAX(doc_updated_at) AS max_doc_updated_at,
+            MAX(office_updated_at) AS max_office_updated_at,
+            MAX(patient_updated_at) AS max_patient_updated_at    
+            MAX(cash_updated_at) AS max_cash_updated_at     
+        FROM {{ this }}
+    ),
 
-SELECT * FROM fresh_data
+    min_of_max AS (
+        SELECT
+            LEAST(
+                max_li_updated_at,
+                max_appt_updated_at,
+                max_doc_updated_at,
+                max_office_updated_at,
+                max_patient_updated_at,
+                max_cash_updated_at
+            ) AS minmax
+        FROM max_updated_at
+    )
+
+    SELECT * FROM fresh_data
     WHERE (
-        li_updated_at > max_li_updated_at
-        OR appt_updated_at > max_appt_updated_at
-        OR doc_updated_at > max_doc_updated_at
-        OR office_updated_at > max_office_updated_at
-        OR patient_updated_at > max_patient_updated_at
-        OR cash_updated_at > max_cash_updated_at
+        GREATEST(
+            li_updated_at,
+            appt_updated_at,
+            doc_updated_at,
+            office_updated_at,
+            patient_updated_at,
+            cash_updated_at
+        )
+        > SELECT minmax FROM min_of_max
     )
 {% else %}
-
 SELECT * FROM fresh_data
 
 {% endif %}
-
 {{ apply_limit_if_test() }}
