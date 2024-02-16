@@ -29,7 +29,7 @@ where
         max(appt_updated_at) AS max_appt_updated_at,
         max(doc_updated_at) AS max_doc_updated_at,
         max(office_updated_at) AS max_office_updated_at,
-        max(patient_updated_at) AS max_patient_updated_at,
+        max(patient_updated_at) AS max_patient_updated_at
     FROM {{ this }}
 )
 
