@@ -1,4 +1,5 @@
-{{ config(
+{{
+    config(
         SORT=["doctor_id", "posted_date", "appt_date_of_service"],
         materialized='incremental',
         unique_key = 'cashpayment_id'
@@ -8,6 +9,7 @@
 WITH fresh_data AS (
 
     SELECT
+
     -- CashPayment
         bcp.cashpayment_id,
         bcp.appointment_id,
@@ -22,14 +24,14 @@ WITH fresh_data AS (
     -- Patient
     {{ patient_fields("p") }},
     -- Doctor
-    {{ doctor_fields("d") }},
+    {{ doctor_fields() }},
     d.practice_group_id,
     -- office
     {{ office_fields("o") }},
     -- Appointment
     -- exam_room: ID and NAME
     a.examination_room as exam_room_id,
-    {{ exam_room_name("a","o") }},
+    {{ exam_room_name("a", "o") }},
     a.appt_service_date_start_date,
     a.appt_service_date_end_date,
     a.appt_first_billed_date,
