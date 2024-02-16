@@ -66,14 +66,14 @@ select
     {{ patient_fields("p") }},
     p.patient_primary_insurance_company,
     -- doctor
-    {{ doctor_fields("d") }},
+    {{ doctor_fields() }},
     d.practice_group_id,
     d.doc_verify_era_before_post
 
 from {{ ref("stg_line_items") }} as bli
 left join
     {{ ref("stg_appointments") }} as a
-    on bli.appointment_id = a.appointment_id {{ days_ago("a.updated_at") }}
+    on bli.appointment_id = a.appointment_id AND {{ days_ago("a.updated_at", 90) }}
 left join {{ ref("stg_doctors") }} as d on a.doctor_id = d.doctor_id and {{ filter_pg("d")}}
 left join {{ ref("stg_offices") }} as o on a.office_id = o.office_id
 left join {{ ref("stg_patients") }} as p on a.patient_id = p.patient_id
