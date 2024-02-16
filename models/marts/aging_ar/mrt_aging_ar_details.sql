@@ -4,7 +4,20 @@
     ) 
 }}
 
-SELECT li.line_item_id
+with lineitems as ( select * FROM  {{ ref("int_lineitems") }} ),
+cash_payments as ( select * FROM  {{ ref("stg_cash_payments") }} ),
+
+
+
+appt_sums as ( SELECT appointment_id, 
+sum(bli_balance_ins+bli_balance_pt) as total_bal,
+sum(bli_balance_ins) as ins_total_bal,
+sum(bli_balance_pt) as pt_total_bal
+FROM lineitems
+GROUP BY 1),
+
+final as (SELECT li.line_item_id
+,sums.*
     --patient
     ,{{ patient_fields("li") }}
     ,li.patient_primary_insurance_company
@@ -22,7 +35,6 @@ SELECT li.line_item_id
   , li.bli_procedure_type
   , li.billing_code
   , li.bli_created_at
-  , li.appointment_id
   , li.appt_first_billed_date 
   , li.appt_last_billed_date
   , li.appt_date_of_service
@@ -40,7 +52,12 @@ SELECT li.line_item_id
 --     END                                           AS "30day_bucket"
 --   , DATE_TRUNC( 'month', ca.first_billed_date )   AS month_bucket
 --   , DATE_TRUNC( 'quarter', ca.first_billed_date ) AS quarter_bucket
-FROM {{ ref("int_lineitems") }} AS li
-LEFT JOIN {{ ref("stg_cash_payments") }} AS bcp
+FROM lineitems AS li
+join appt_sums AS sums ON li.appointment_id =sums.appointment_id
+LEFT JOIN cash_payments AS bcp
     ON bcp.line_item_id = li.line_item_id
 WHERE (li.bli_balance_ins != 0 OR li.bli_balance_pt != 0)
+)
+
+SELECT * FROM final
+WHERE practice_group_id = 1479
