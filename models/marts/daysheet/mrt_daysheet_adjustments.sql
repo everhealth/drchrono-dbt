@@ -68,7 +68,7 @@ where
             lit_updated_at,
             era_updated_at
         )
-        > SELECT minmax FROM min_of_max
+        > (SELECT minmax FROM min_of_max)
     )
 {% else %}
 SELECT * FROM fresh_data
