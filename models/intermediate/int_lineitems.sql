@@ -68,7 +68,13 @@ select
     -- doctor
     {{ doctor_fields() }},
     d.practice_group_id,
-    d.doc_verify_era_before_post
+    d.doc_verify_era_before_post,
+    --updates
+    bli.li_updated_at, 
+    a.appt_updated_at, 
+    d.doc_updated_at, 
+    o.office_updated_at, 
+    p.patient_updated_at
 
 from {{ ref("stg_line_items") }} as bli
 left join

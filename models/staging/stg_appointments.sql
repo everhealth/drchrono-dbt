@@ -31,11 +31,13 @@ select
     convert_timezone('PST', 'UTC', last_billed_date) as appt_last_billed_date,
     convert_timezone('PST', 'UTC', service_date_start_date) as appt_service_date_start_date,
     convert_timezone('PST', 'UTC', service_date_end_date) as appt_service_date_end_date,
-    convert_timezone('PST', 'UTC', created_at) as appt_created_at
+    convert_timezone('PST', 'UTC', created_at) as appt_created_at,
+    updated_at as appt_updated_at
 
 from {{ source("chronometer_production", "chronometer_appointment") }}
 where
     deleted_flag is false
     and appt_is_break is false
     and is_demo_data_appointment is false
+    and _fivetran_deleted is false
 

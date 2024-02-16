@@ -8,7 +8,9 @@ select
     || lastname
     || case
         when suffix is not null then ', ' || suffix else ''
-    end as doc_fullname
+    end as doc_fullname,
+    updated_at as doc_updated_at
 
 from {{ source("chronometer_production", "chronometer_doctor") }} d
-WHERE {{ filter_pg("d")}}
+WHERE {{ filter_pg("d")}} 
+and _fivetran_deleted is false
