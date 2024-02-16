@@ -57,7 +57,7 @@ WITH fresh_data AS (
             office_updated_at,
             patient_updated_at
         )
-        > SELECT minmax FROM min_of_max
+        > (SELECT minmax FROM min_of_max)
     )
 {% else %}
 
