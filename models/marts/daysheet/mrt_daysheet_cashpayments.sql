@@ -107,7 +107,7 @@ WITH fresh_data AS (
             patient_updated_at,
             cash_updated_at
         )
-        > SELECT minmax FROM min_of_max
+        > (SELECT minmax FROM min_of_max)
     )
 {% else %}
 SELECT * FROM fresh_data
