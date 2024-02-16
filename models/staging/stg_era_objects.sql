@@ -11,3 +11,4 @@ select
     convert_timezone('EST', 'UTC', updated_at) as era_updated_at,
     convert_timezone('EST', 'UTC', deposit_date) as era_deposit_date
 from {{ source("chronometer_production", "billing_eraobject") }}
+WHERE _fivetran_deleted is false

@@ -10,6 +10,8 @@ select
     bcp.payment_method,
     bcp.doctor_id as doctor_id,
     bcp.patient_id as patient_id,
-    bcp.parent_id
+    bcp.parent_id,
+    updated_at as cash_updated_at
 
 from {{ source("chronometer_production", "billing_cashpayment") }} as bcp
+WHERE _fivetran_deleted is false

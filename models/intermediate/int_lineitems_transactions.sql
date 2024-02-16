@@ -23,7 +23,8 @@ select
     case
         when lit_ins_idx = 1 then ali.appt_primary_insurer_payer_id
         when lit_ins_idx = 2 then ali.appt_secondary_insurer_payer_id
-    end as ins_info_payer_id
+    end as ins_info_payer_id,
+    lit.lit_updated_at
 from {{ ref("stg_line_item_transactions") }} as lit
 left join
     {{ ref("int_lineitems") }} as ali
