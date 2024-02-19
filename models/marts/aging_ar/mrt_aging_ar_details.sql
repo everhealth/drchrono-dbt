@@ -37,4 +37,5 @@ WHERE (li.bli_balance_ins != 0 OR li.bli_balance_pt != 0)
 )
 
 SELECT * FROM final
-WHERE practice_group_id = 1479
+
+{{ apply_limit_if_test() }}
