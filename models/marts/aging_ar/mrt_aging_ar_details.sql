@@ -7,22 +7,13 @@
 with lineitems as ( select * FROM  {{ ref("int_lineitems") }} ),
 cash_payments as ( select * FROM  {{ ref("stg_cash_payments") }} ),
 
-
-
-appt_sums as ( SELECT appointment_id, 
-sum(bli_balance_ins+bli_balance_pt) as total_bal,
-sum(bli_balance_ins) as ins_total_bal,
-sum(bli_balance_pt) as pt_total_bal
-FROM lineitems
-GROUP BY 1),
-
 final as (SELECT li.line_item_id
-,sums.*
     --patient
     ,{{ patient_fields("li") }}
     ,li.patient_primary_insurance_company
     -- doctor
     ,{{ doctor_fields("li") }}
+    ,{{ office_fields("li") }}
    ,li.practice_group_id
   , li.bli_balance_ins
   , li.bli_balance_pt
@@ -38,22 +29,8 @@ final as (SELECT li.line_item_id
   , li.appt_first_billed_date 
   , li.appt_last_billed_date
   , li.appt_date_of_service
---We can move this logic to a custom field in superset, which will also allow us to make the dates interchangagble. 
---     , CASE
---         WHEN DATEDIFF( 'day', ca.first_billed_date, CURRENT_DATE ) BETWEEN 0 AND 30
---             THEN 'a. 0-30 days'
---         WHEN DATEDIFF( 'day', ca.first_billed_date, CURRENT_DATE ) BETWEEN 31 AND 60
---             THEN 'b. 31-60 days'
---         WHEN DATEDIFF( 'day', ca.first_billed_date, CURRENT_DATE ) BETWEEN 61 AND 90
---             THEN 'c. 61-90 days'
---         WHEN DATEDIFF( 'day', ca.first_billed_date, CURRENT_DATE ) BETWEEN 91 AND 120
---             THEN 'd. 91-120 days'
---             ELSE 'e. 121+ days'
---     END                                           AS "30day_bucket"
---   , DATE_TRUNC( 'month', ca.first_billed_date )   AS month_bucket
---   , DATE_TRUNC( 'quarter', ca.first_billed_date ) AS quarter_bucket
+
 FROM lineitems AS li
-join appt_sums AS sums ON li.appointment_id =sums.appointment_id
 LEFT JOIN cash_payments AS bcp
     ON bcp.line_item_id = li.line_item_id
 WHERE (li.bli_balance_ins != 0 OR li.bli_balance_pt != 0)
