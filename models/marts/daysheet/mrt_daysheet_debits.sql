@@ -8,6 +8,7 @@
 
 WITH fresh_data AS (
     SELECT
+        line_item_id,
         appointment_id, 
         {{ patient_fields("li") }}, 
         {{ office_fields("li") }}, 
