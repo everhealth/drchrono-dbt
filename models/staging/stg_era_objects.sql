@@ -4,7 +4,7 @@ select
     insurance_name as era_insurance_name,
     total_paid as era_total_paid,
     is_verified as era_is_verified,
-    is_eob as era_is_eob,
+    is_eob,
     is_archived as era_is_archived,
     convert_timezone('EST', 'UTC', posted_date) as era_posted_date,
     convert_timezone('EST', 'UTC', created_at) as era_created_at,

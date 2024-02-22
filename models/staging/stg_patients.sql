@@ -1,8 +1,11 @@
 select
     id as patient_id,
-    chart_id as patient_chart_id,
+    chart_id,
     patient_payment_profile,
-    primary_insurance_company as patient_primary_insurance_company,
+    primary_insurance_company,
+    secondary_insurance_company,
+    primary_insurance_plan_type,
+    secondary_insurance_plan_type,
     first_name as patient_first_name,
     middle_name as patient_middle_name,
     last_name as patient_last_name,

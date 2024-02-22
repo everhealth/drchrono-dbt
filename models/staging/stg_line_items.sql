@@ -1,7 +1,7 @@
 select
     id as line_item_id,
-    billing_status,
-    code,
+    billing_status as li_billing_status,
+    code as billing_code,
     description,
     procedure_type,
     quantity,
@@ -20,7 +20,7 @@ select
     expected_reimbursement,
     appointment_id,
     coalesce(billed, 0) as billed,
-    convert_timezone('EST', 'UTC', created_at) as created_at,
+    convert_timezone('EST', 'UTC', created_at) as li_created_at,
     updated_at as li_updated_at
 from {{ source("chronometer_production", "billing_billinglineitem") }}
 WHERE _fivetran_deleted is false

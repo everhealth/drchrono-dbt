@@ -1,7 +1,7 @@
 select
     id as doctor_id,
     practice_group_id,
-    verify_era_before_post as doc_verify_era_before_post,
+    verify_era_before_post,
     case when salutation is not null then salutation || ' ' else '' end
     || firstname
     || ' '

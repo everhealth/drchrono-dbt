@@ -5,8 +5,11 @@ WITH group_by_choices AS (
     SELECT 'Office'
 
     UNION DISTINCT
-    SELECT 'Billing/Claim Status'    
+    SELECT 'Billing Status'    
     
+    UNION DISTINCT
+    SELECT 'Claim Status'  
+
     UNION DISTINCT
     SELECT 'Insurance'    
 

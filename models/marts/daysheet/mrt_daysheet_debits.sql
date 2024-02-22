@@ -9,16 +9,16 @@
 WITH fresh_data AS (
     SELECT
         *,
-        appt_primary_insurer_company AS ins_info_name,
-        appt_primary_insurer_payer_id AS ins_info_payer_id
+        primary_insurer_company AS ins_info_name,
+        primary_insurer_payer_id AS ins_info_payer_id
     FROM {{ ref("int_lineitems") }}
     WHERE
         NOT (
             COALESCE(appointment_status, '') = 'No Show'
-            AND bli_procedure_type IN ('C', 'H', 'R')
+            AND procedure_type IN ('C', 'H', 'R')
         )
         AND COALESCE(appointment_status, '') NOT IN ('Cancelled', 'Rescheduled')
-        AND bli_billed > 0
+        AND billed > 0
         AND DATEDIFF(
             DAY, GREATEST(bli_created_at, appt_date_of_service), CURRENT_DATE
         )
