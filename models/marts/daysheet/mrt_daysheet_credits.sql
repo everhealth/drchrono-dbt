@@ -20,7 +20,14 @@ WITH fresh_data AS (
         lit_created_at,
         lit_posted_date,
         era_deposit_date,
-        ins_paid
+        ins_paid,
+        li_updated_at,
+        appt_updated_at,
+        doc_updated_at,
+        office_updated_at,
+        patient_updated_at,
+        lit_updated_at,
+        era_updated_at
     FROM {{ ref("int_lineitems_transactions") }} AS lit
     INNER JOIN
         {{ ref("stg_practice_group_options") }} AS pgo

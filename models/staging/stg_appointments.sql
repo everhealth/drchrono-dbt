@@ -1,9 +1,9 @@
 SELECT
     id                                                  AS appointment_id
     , appointment_status
-    , doctor_id                                         AS fk_doctor_id
-    , office_id                                         AS fk_office_id
-    , patient_id                                        AS fk_patient_id
+    , doctor_id                                         AS appt_doctor_id
+    , office_id                                         AS appt_office_id
+    , patient_id                                        AS appt_patient_id
     , examination_room
     , updated_at
     , scheduled_time::DATE                              AS date_of_service

@@ -58,11 +58,11 @@ line_items AS (SELECT * FROM {{ ref("stg_line_items") }})
     FROM line_items AS li
         LEFT JOIN
             appointments AS a
-            ON li.fk_appointment_id = a.appointment_id AND {{ days_ago("a.appt_updated_at", 90) }}
-        LEFT JOIN doctors AS d ON a.fk_doctor_id = d.doctor_id AND {{ filter_pg("d") }}
-        LEFT JOIN offices AS o ON a.fk_office_id = o.office_id
-        LEFT JOIN patients AS p ON a.fk_patient_id = p.patient_id
-    WHERE li.fk_appointment_id IS NULL OR a.appointment_id IS NOT NULL
+            ON li.li_appointment_id = a.appointment_id AND {{ days_ago("a.appt_updated_at", 90) }}
+        LEFT JOIN doctors AS d ON a.appt_doctor_id = d.doctor_id AND {{ filter_pg("d") }}
+        LEFT JOIN offices AS o ON a.appt_office_id = o.office_id
+        LEFT JOIN patients AS p ON a.appt_patient_id = p.patient_id
+    WHERE li.li_appointment_id IS NULL OR a.appointment_id IS NOT NULL
 )
 
 SELECT * FROM final

@@ -18,7 +18,7 @@ SELECT
     , resp_pt
     , billing_profile_id
     , expected_reimbursement
-    , appointment_id                             AS fk_appointment_id
+    , appointment_id                             AS li_appointment_id
     , COALESCE(billed, 0)                        AS billed
     , CONVERT_TIMEZONE('EST', 'UTC', created_at) AS li_created_at
     , updated_at                                 AS li_updated_at

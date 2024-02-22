@@ -19,7 +19,12 @@ WITH fresh_data AS (
         primary_insurer_payer_id AS ins_info_payer_id,
         date_of_service, 
         li_created_at,
-        billed
+        billed,            
+        li_updated_at,
+        appt_updated_at,
+        doc_updated_at,
+        office_updated_at,
+        patient_updated_at
  
 
     FROM {{ ref("int_lineitems") }} li

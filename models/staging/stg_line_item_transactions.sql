@@ -1,7 +1,7 @@
 SELECT
     id                                            AS line_item_transaction_id
-    , line_item_id                                AS fk_line_item_id
-    , era_id                                      AS fk_era_id
+    , line_item_id                                AS lit_line_item_id
+    , era_id                                      AS lit_era_id
     , trace_number
     , claim_status                                AS lit_claim_status
     , adjustment_group_code

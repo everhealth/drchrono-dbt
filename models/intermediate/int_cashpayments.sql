@@ -30,14 +30,16 @@ cash_payments AS (SELECT * FROM {{ ref("stg_cash_payments") }})
         cp.*
         , a.*
         , d.*
+        , p.*
         , o.*
         , li.*
+        , {{ exam_room_name("a","o") }}
     FROM cash_payments AS cp
-        LEFT JOIN appointments AS a ON cp.fk_appointment_id = a.appointment_id
-        LEFT JOIN doctors AS d ON COALESCE(a.fk_doctor_id, cp.fk_doctor_id) = d.doctor_id
-        LEFT JOIN patients AS p ON cp.fk_patient_id = p.patient_id
-        LEFT JOIN offices AS o ON a.fk_office_id = o.office_id
-        LEFT JOIN line_items AS li ON cp.fk_line_item_id = li.line_item_id
+        LEFT JOIN appointments AS a ON cp.cash_appointment_id = a.appointment_id
+        LEFT JOIN doctors AS d ON COALESCE(a.appt_doctor_id, cp.cash_doctor_id) = d.doctor_id
+        LEFT JOIN patients AS p ON cp.cash_patient_id = p.patient_id
+        LEFT JOIN offices AS o ON a.appt_office_id = o.office_id
+        LEFT JOIN line_items AS li ON cp.cash_line_item_id = li.line_item_id
 )
 
 SELECT * FROM final
