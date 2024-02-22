@@ -79,7 +79,7 @@ WITH fresh_data AS (
             MAX(appt_updated_at) AS max_appt_updated_at,
             MAX(doc_updated_at) AS max_doc_updated_at,
             MAX(office_updated_at) AS max_office_updated_at,
-            MAX(patient_updated_at) AS max_patient_updated_at    
+            MAX(patient_updated_at) AS max_patient_updated_at,    
             MAX(cash_updated_at) AS max_cash_updated_at     
         FROM {{ this }}
     ),
