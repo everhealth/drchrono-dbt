@@ -37,7 +37,7 @@ WITH fresh_data AS (
     a.first_billed_date,
     a.date_of_service,
     a.institutional_claim_flag,
-    bli.code as billing_code,
+    bli.billing_code,
     primary_insurer_company as ins_info_name,
     primary_insurer_payer_id as ins_info_payer_id,        
     li_updated_at ,
@@ -52,11 +52,11 @@ WITH fresh_data AS (
         ON bcp.appointment_id = a.appointment_id
     LEFT JOIN
         {{ ref("stg_doctors") }} AS d
-        ON coalesce(a.doctor_id, bcp.doctor_id) = d.doctor_id
+        ON coalesce(a.fk_doctor_id, bcp.doctor_id) = d.doctor_id
     LEFT JOIN
         {{ ref("stg_patients") }} AS p
         ON bcp.patient_id = p.patient_id
-    LEFT JOIN {{ ref("stg_offices") }} AS o ON a.office_id = o.office_id
+    LEFT JOIN {{ ref("stg_offices") }} AS o ON a.fk_office_id = o.office_id
     LEFT JOIN
         {{ ref("stg_line_items") }} AS bli
         ON bcp.line_item_id = bli.line_item_id

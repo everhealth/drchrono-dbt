@@ -7,7 +7,20 @@
 }}
 
 WITH fresh_data AS (
-    SELECT lit.*
+    SELECT         
+        appointment_id, 
+        {{ patient_fields("lit") }}, 
+        {{ office_fields("lit") }}, 
+        {{ doctor_fields("lit") }},        
+        exam_room_name,
+        billing_code,
+        lit.practice_group_id,
+        ins_info_name,
+        ins_info_payer_id,
+        lit_created_at,
+        lit_posted_date,
+        era_deposit_date,
+        ins_paid
     FROM {{ ref("int_lineitems_transactions") }} AS lit
     INNER JOIN
         {{ ref("stg_practice_group_options") }} AS pgo
@@ -16,8 +29,8 @@ WITH fresh_data AS (
         coalesce(appointment_status, '') NOT IN (
             'No Show', 'Cancelled', 'Rescheduled'
         )
-        AND lit_ins_paid != 0
-        AND lit_adjustment_reason IN ('-3', '253', '225')
+        AND ins_paid != 0
+        AND adjustment_reason IN ('-3', '253', '225')
         -- adjustment_reasons: -3 = insurance payment, 225 = interest, 253 = sequestration
         AND lit_is_archived IS false
         AND greatest(lit_created_at, lit_posted_date, era_deposit_date)

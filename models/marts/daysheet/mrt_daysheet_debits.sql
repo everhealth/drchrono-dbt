@@ -8,10 +8,21 @@
 
 WITH fresh_data AS (
     SELECT
-        *,
+        appointment_id, 
+        {{ patient_fields("li") }}, 
+        {{ office_fields("li") }}, 
+        {{ doctor_fields("li") }}, 
+        exam_room_name,
+        billing_code,
+        practice_group_id,
         primary_insurer_company AS ins_info_name,
-        primary_insurer_payer_id AS ins_info_payer_id
-    FROM {{ ref("int_lineitems") }}
+        primary_insurer_payer_id AS ins_info_payer_id,
+        date_of_service, 
+        li_created_at,
+        billed
+ 
+
+    FROM {{ ref("int_lineitems") }} li
     WHERE
         NOT (
             COALESCE(appointment_status, '') = 'No Show'
@@ -20,7 +31,7 @@ WITH fresh_data AS (
         AND COALESCE(appointment_status, '') NOT IN ('Cancelled', 'Rescheduled')
         AND billed > 0
         AND DATEDIFF(
-            DAY, GREATEST(bli_created_at, appt_date_of_service), CURRENT_DATE
+            DAY, GREATEST(li_created_at, date_of_service), CURRENT_DATE
         )
         < 365
 )

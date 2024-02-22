@@ -8,7 +8,19 @@
 
 WITH fresh_data AS (
 select
-    lit.*
+        appointment_id, 
+        {{ patient_fields("lit") }}, 
+        {{ office_fields("lit") }}, 
+        {{ doctor_fields("lit") }},        
+        exam_room_name,
+        billing_code,
+        lit.practice_group_id,
+        ins_info_name,
+        ins_info_payer_id,
+        lit_created_at,
+        lit_posted_date,
+        era_deposit_date,
+        lit_adjustment
 from {{ ref("int_lineitems_transactions") }} lit
 inner join
     {{ ref("stg_practice_group_options") }} as pgo
@@ -17,14 +29,14 @@ where
     coalesce(appointment_status, '') not in (
         'No Show', 'Cancelled', 'Rescheduled'
     )
-    and coalesce(lit_adjusted_adjustment_reason, '')
+    and coalesce(adjusted_adjustment_reason, '')
     not in ('PATIENT_RESPONSIBLE', 'SKIP_SECONDARY', 'DENIAL')
-    and coalesce(lit_adjustment_reason, '') not in (
+    and coalesce(adjustment_reason, '') not in (
         '-3', '253', '225', '1', '2', '3'
     )
     -- adjustment_reasons: -3 = insurance payment, 253 = sequestration, 225 =
     -- interest, 1 = deductible, 2 = coinsurance, 3 = copayment
-    and lit_ins_paid = 0
+    and ins_paid = 0
     and lit_is_archived is false
     and GREATEST(lit_created_at,lit_posted_date, era_deposit_date) > current_date - INTERVAL '365 days'
     and (era_is_verified or not pgo.verify_era_before_post)

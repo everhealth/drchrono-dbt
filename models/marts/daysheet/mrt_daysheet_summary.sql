@@ -18,8 +18,8 @@ select
     practice_group_id,
 
     --dates
-    appt_date_of_service as dos,
-    bli_created_at as debit_posted_date,
+    date_of_service,
+    li_created_at as debit_posted_date,
     null as ca_posted_date,
     null as ca_check_date,
     null as ca_deposit_date,
@@ -27,7 +27,7 @@ select
     null as cash_payment_date,
 
     -- metric fields
-    bli_billed as debit_amount,
+    billed as debit_amount,
     null as credit_amount,
     null as adjustment_amount,
     null as patient_payment_amount
@@ -49,7 +49,7 @@ select
     practice_group_id,
     
     --dates
-    null as dos,
+    null as date_of_service,
     null as debit_posted_date,
     lit_created_at as ca_posted_date,
     lit_posted_date as ca_check_date,
@@ -59,7 +59,7 @@ select
 
     -- metric fields
     null as debit_amount,
-    lit_ins_paid as credit_amount,
+    ins_paid as credit_amount,
     null as adjustment_amount,
     null as patient_payment_amount
 
@@ -80,7 +80,7 @@ select
     practice_group_id,
     
     --dates
-    null as dos,
+    null as date_of_service,
     null as debit_posted_date,
     lit_created_at as ca_posted_date,
     lit_posted_date as ca_check_date,
@@ -110,7 +110,7 @@ select
     practice_group_id,
     
     --dates
-    null as dos,
+    null as date_of_service,
     null as debit_posted_date,
     null as ca_posted_date,
     null as ca_check_date,
