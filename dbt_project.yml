@@ -5,6 +5,9 @@
 name: 'drc_redshift_reports'
 version: '1.0.0'
 config-version: 2
+# https://cloud.getdbt.com/settings/profile/cloud-cli
+#dbt-cloud:
+#    project-id: 339198
 
 # This setting configures which "profile" dbt uses for this project.
 profile: 'redshift_reports'
@@ -24,9 +27,9 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-dispatch:
-  - macro_namespace: dbt
-    search_order: ['dbt_project_evaluator', 'dbt']
+#dispatch:
+#  - macro_namespace: dbt
+#    search_order: ['dbt']
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
