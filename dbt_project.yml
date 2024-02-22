@@ -38,6 +38,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # as MVs. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 models:
+  +on_schema_change: "sync_all_columns"
   drc_redshift_reports:
     staging:
       tags: ["run_for_prs"]

@@ -1,16 +1,16 @@
-select
-    id as doctor_id,
-    practice_group_id,
-    verify_era_before_post as doc_verify_era_before_post,
-    case when salutation is not null then salutation || ' ' else '' end
+SELECT
+    id           AS doctor_id
+    , practice_group_id
+    , verify_era_before_post
+    , CASE WHEN salutation IS NOT NULL THEN salutation || ' ' ELSE '' END
     || firstname
     || ' '
     || lastname
-    || case
-        when suffix is not null then ', ' || suffix else ''
-    end as doc_fullname,
-    updated_at as doc_updated_at
+    || CASE
+        WHEN suffix IS NOT NULL THEN ', ' || suffix ELSE ''
+    END          AS doc_fullname
+    , updated_at AS doc_updated_at
 
-from {{ source("chronometer_production", "chronometer_doctor") }} d
-WHERE {{ filter_pg("d")}} 
-and _fivetran_deleted is false
+FROM {{ source("chronometer_production", "chronometer_doctor") }} AS d
+WHERE         {{ filter_pg("d") }} 
+    AND _fivetran_deleted IS FALSE

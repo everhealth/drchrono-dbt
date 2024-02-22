@@ -1,33 +1,33 @@
-select
-    ali.*,
-    era.*,
-    lit.line_item_transaction_id,
-    lit.lit_trace_number,
-    lit.lit_claim_status,
-    lit.lit_adjustment_group_code,
-    lit.lit_posted_date,
-    lit.lit_allowed,
-    lit.lit_adjustment,
-    lit.lit_ins_paid,
-    lit.lit_adjustment_reason,
-    lit.lit_created_at,
-    lit.lit_adjusted_adjustment_reason,
-    lit.lit_code,
-    lit.lit_status,
-    lit.lit_is_archived,
-    lit.lit_ins_idx,
-    case
-        when lit_ins_idx = 1 then ali.appt_primary_insurer_company
-        when lit_ins_idx = 2 then ali.appt_secondary_insurer_company
-    end as ins_info_name,
-    case
-        when lit_ins_idx = 1 then ali.appt_primary_insurer_payer_id
-        when lit_ins_idx = 2 then ali.appt_secondary_insurer_payer_id
-    end as ins_info_payer_id,
-    lit.lit_updated_at
-from {{ ref("stg_line_item_transactions") }} as lit
-left join
-    {{ ref("int_lineitems") }} as ali
-    on lit.line_item_id = ali.line_item_id
-left join {{ ref("stg_era_objects") }} as era on lit.lit_era_id = era.era_id
-where lit.line_item_id is NULL or ali.line_item_id is not NULL
+WITH
+line_items AS (SELECT * FROM {{ ref("int_lineitems") }})
+
+, era_objects AS (SELECT * FROM {{ ref("stg_era_objects") }})
+
+, line_item_transactions AS (SELECT * FROM {{ ref("stg_line_item_transactions") }}
+)
+
+, final AS (
+    SELECT
+        li.*
+        , era.*
+        , lit.*
+        , CASE
+            WHEN ins_idx = 1
+                THEN li.primary_insurer_company
+            WHEN ins_idx = 2
+                THEN li.secondary_insurer_company
+        END AS ins_info_name
+        , CASE
+            WHEN ins_idx = 1
+                THEN li.primary_insurer_payer_id
+            WHEN ins_idx = 2
+                THEN li.secondary_insurer_payer_id
+        END AS ins_info_payer_id
+    FROM line_item_transactions AS lit
+        LEFT JOIN line_items AS li ON lit.lit_line_item_id = li.line_item_id
+        LEFT JOIN era_objects AS era ON lit.lit_era_id = era.era_id
+    WHERE lit.lit_line_item_id IS NULL OR li.line_item_id IS NOT NULL
+)
+
+SELECT *
+FROM final
