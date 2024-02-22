@@ -3,11 +3,11 @@ jobs:
 # Job names must be unique.
  - name: daysheet_summary
    targetName: dev # The name of the target that will be used when running the job. If it's not specified, the target will be named 'prod'.
-   schedule: */15 * * * * # Define when this job should run, using cron format. This example will run every day at 12:00pm (according to your warehouse timezone). For help with cron formatting, visit https://crontab.guru/.
+   schedule: '*/15 * * * *' # Define when this job should run, using cron format. This example will run every day at 12:00pm (according to your warehouse timezone). For help with cron formatting, visit https://crontab.guru/.
    # Optional timeout that limits the maximum run time of the job. You can specify only hours, only minutes or both, for example "6h", "2h30m", "30m"
    # The value can be in range from 30 minutes to 24 hours.
    # If timeout is not specified, the job will be terminated after 24 hours.
    timeout: 40m
    steps:
-     - name: run models # Give each step in your job a name. This will enable you to track the steps in the logs.
+     - name: run daysheet summary # Give each step in your job a name. This will enable you to track the steps in the logs.
        command: dbt run --models +mrt_daysheet_summary # Enter the dbt command that should run in this step. This example will run all your models. For a list of available commands visit https://docs.getdbt.com/reference/model-selection-syntax/.
