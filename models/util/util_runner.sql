@@ -1,5 +1,5 @@
 {{ config(
-    post_hook = "DROP TABLE public_util.util_runner"
+    post_hook = "DROP TABLE IF EXISTS public_util.util_runner"
 ) }}
 
 WITH aging_ar_bucket_options AS (SELECT * FROM {{ ref("aging_ar_bucket_options") }})
