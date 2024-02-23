@@ -11,3 +11,35 @@ jobs:
    steps:
      - name: run daysheet summary # Give each step in your job a name. This will enable you to track the steps in the logs.
        command: dbt run --models +mrt_daysheet_summary # Enter the dbt command that should run in this step. This example will run all your models. For a list of available commands visit https://docs.getdbt.com/reference/model-selection-syntax/.
+       
+ - name: utility_runner
+   targetName: dev 
+   schedule: '30 8 * * 1-5' 
+   timeout: 15m
+   steps:
+     - name: run utility tables 
+       command: dbt run --models +util_runner
+
+ - name: daysheet_daily_refresh
+   targetName: dev 
+   schedule: '30 7 * * 1-5' 
+   timeout: 60m
+   steps:
+     - name: run full refresh on daysheet tables 
+       command: dbt run --full-refresh --models mrt_daysheet_debits mrt_daysheet_credits mrt_daysheet_adjustments mrt_daysheet_cashpayments
+
+ - name: table_sizes
+   targetName: dev 
+   schedule: '30 * * * *' 
+   timeout: 40m
+   steps:
+     - name: table_sizes 
+       command: dbt run --models +table_sizes
+
+ - name: node_storage
+   targetName: dev 
+   schedule: '5 * * * *' 
+   timeout: 10m
+   steps:
+     - name: node_storage 
+       command: dbt run --models +node_storage
