@@ -10,7 +10,7 @@ SELECT
     , middle_name AS patient_middle_name
     , last_name   AS patient_last_name
     , CASE
-        WHEN middle_name = ''
+        WHEN middle_name IS NULL
             THEN first_name || ' ' || last_name
         WHEN middle_name IS NOT NULL
             THEN first_name || ' ' || middle_name || ' ' || last_name
