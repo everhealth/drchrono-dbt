@@ -15,7 +15,7 @@ jobs:
  - name: utility_runner
    targetName: dev 
    schedule: '30 8 * * 1-5' 
-   timeout: 15m
+   timeout: 40m
    steps:
      - name: run utility tables 
        command: dbt run --models +util_runner
@@ -31,7 +31,7 @@ jobs:
  - name: table_sizes
    targetName: dev 
    schedule: '30 * * * *' 
-   timeout: 40m
+   timeout: 30m
    steps:
      - name: table_sizes 
        command: dbt run --models +table_sizes
@@ -39,7 +39,7 @@ jobs:
  - name: node_storage
    targetName: dev 
    schedule: '5 * * * *' 
-   timeout: 10m
+   timeout: 30m
    steps:
      - name: node_storage 
        command: dbt run --models +node_storage
