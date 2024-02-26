@@ -31,7 +31,7 @@ jobs:
  - name: table_sizes
    targetName: dev 
    schedule: '30 * * * *' 
-   timeout: 60m
+   timeout: 30m
    steps:
      - name: table_sizes 
        command: dbt run --models +table_sizes
