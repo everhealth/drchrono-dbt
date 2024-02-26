@@ -7,7 +7,7 @@ jobs:
    # Optional timeout that limits the maximum run time of the job. You can specify only hours, only minutes or both, for example "6h", "2h30m", "30m"
    # The value can be in range from 30 minutes to 24 hours.
    # If timeout is not specified, the job will be terminated after 24 hours.
-   timeout: 40m
+   timeout: 30m
    steps:
      - name: run daysheet summary # Give each step in your job a name. This will enable you to track the steps in the logs.
        command: dbt run --models +mrt_daysheet_summary # Enter the dbt command that should run in this step. This example will run all your models. For a list of available commands visit https://docs.getdbt.com/reference/model-selection-syntax/.
@@ -15,7 +15,7 @@ jobs:
  - name: utility_runner
    targetName: dev 
    schedule: '30 8 * * 1-5' 
-   timeout: 15m
+   timeout: 30m
    steps:
      - name: run utility tables 
        command: dbt run --models +util_runner
@@ -23,7 +23,7 @@ jobs:
  - name: daysheet_daily_refresh
    targetName: dev 
    schedule: '30 7 * * 1-5' 
-   timeout: 60m
+   timeout: 30m
    steps:
      - name: run full refresh on daysheet tables 
        command: dbt run --full-refresh --models mrt_daysheet_debits mrt_daysheet_credits mrt_daysheet_adjustments mrt_daysheet_cashpayments
@@ -31,7 +31,7 @@ jobs:
  - name: table_sizes
    targetName: dev 
    schedule: '30 * * * *' 
-   timeout: 40m
+   timeout: 30m
    steps:
      - name: table_sizes 
        command: dbt run --models +table_sizes
@@ -39,7 +39,7 @@ jobs:
  - name: node_storage
    targetName: dev 
    schedule: '5 * * * *' 
-   timeout: 10m
+   timeout: 30m
    steps:
      - name: node_storage 
        command: dbt run --models +node_storage
