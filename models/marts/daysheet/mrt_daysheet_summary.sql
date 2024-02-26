@@ -2,6 +2,7 @@
     config(
         SORT=["practice_group_id", "doctor_id"],
         materialized = "view",
+        bind=False
     ) 
 }}
 

@@ -21,6 +21,7 @@ WITH fresh_data AS (
         lit_created_at,
         lit_posted_date,
         era_deposit_date,
+        date_of_service, 
         ins_paid,
         li_updated_at,
         appt_updated_at,
