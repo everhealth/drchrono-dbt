@@ -29,7 +29,9 @@ WITH fresh_data AS (
         office_updated_at,
         patient_updated_at,
         lit_updated_at,
-        era_updated_at
+        era_updated_at,
+        adjustment_reason,
+        adjusted_adjustment_reason
 from {{ ref("int_lineitems_transactions") }} lit
 inner join
     {{ ref("stg_practice_group_options") }} as pgo
