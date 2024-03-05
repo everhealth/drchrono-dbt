@@ -22,6 +22,8 @@ SELECT
     , primary_insurer_company
     , secondary_insurer_company
     , icd_version_number
+    , icd9_diagnosis
+    , icd10_diagnosis_json
     , institutional_claim_flag
     , billing_provider_id
     , supervising_provider_id

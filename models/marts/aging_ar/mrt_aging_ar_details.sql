@@ -4,41 +4,50 @@
     ) 
 }}
 
-WITH lineitems AS (SELECT * FROM {{ ref("int_lineitems") }})
+WITH lineitems AS (SELECT * FROM {{ ref("int_lineitems") }}),
 
-, cash_payments AS (SELECT * FROM {{ ref("stg_cash_payments") }})
+aggs as (
+    SELECT line_item_id,
+    sum(balance_ins) as total_claim_bal_ins,
+    sum(balance_pt) as total_claim_bal_pt,
+    count(expected_reimbursement) as total_claim_expeceted
+    FROM lineitems GROUP BY 1
+)
 
 , final AS (
     SELECT
-        li.line_item_id
+        aggs.*
         --patient
         , {{ patient_fields("li") }}
-        , li.primary_insurance_company
+        , patient_date_of_birth
+        , primary_insurance_company
         -- doctor
         , {{ doctor_fields("li") }}
         , {{ office_fields("li") }}
-        , li.practice_group_id
-        , li.balance_ins
-        , li.balance_pt
-        , li.billed
-        , li.li_allowed
-        , li.price
-        , li.quantity
-        , li.li_adjustment
-        , li.expected_reimbursement
-        , li.procedure_type
-        , li.billing_code
-        , li.li_created_at
-        , li.first_billed_date
-        , li.last_billed_date
-        , li.date_of_service
-        , li.appointment_id
-        , li.appt_billing_status
+        , practice_group_id
+        , balance_ins
+        , balance_pt
+        , billed
+        , li_allowed
+        , price
+        , quantity
+        , li_adjustment
+        , expected_reimbursement
+        , procedure_type
+        , billing_code
+        , li_created_at
+        , first_billed_date
+        , last_billed_date
+        , date_of_service
+        , appointment_id
+        , appt_billing_status
+        , icd_codes_str
+        , modifiers_json
+        , diagnosis_pointers_json
 
-    FROM lineitems AS li
-        LEFT JOIN cash_payments AS bcp
-            ON li.line_item_id = bcp.cash_line_item_id
-    WHERE (li.balance_ins != 0 OR li.balance_pt != 0)
+    FROM lineitems li
+    LEFT JOIN aggs on li.line_item_id = aggs.line_item_id
+    WHERE (balance_ins != 0 OR balance_pt != 0)
 )
 
 SELECT * FROM final
