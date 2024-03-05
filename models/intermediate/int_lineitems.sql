@@ -20,8 +20,6 @@ WITH
 
     , patients AS (SELECT * FROM {{ ref("stg_patients") }})
 
-    , cash_payments AS (SELECT * FROM {{ ref("stg_cash_payments") }})
-
     , final AS (
         SELECT
 
@@ -30,7 +28,6 @@ WITH
             , d.*
             , o.*
             , p.*
-            , cp.*
             , {{ exam_room_name("a","o") }}
             , CASE -- If icd_version_number is 9, use ICD9 codes
                 -- If icd_version_number is 10, use ICD10 codes
@@ -57,13 +54,13 @@ WITH
                 ELSE p.primary_insurance_plan_type
             END AS insurance_plan
             , CASE
-                WHEN ins1_status != '' AND ins2_status = '' THEN p.primary_insurance_company
+                WHEN a.ins1_status != '' AND a.ins2_status = '' THEN p.primary_insurance_company
                 WHEN
-                    appt_billing_status = 'Bill Secondary Insurance'
+                    a.appt_billing_status = 'Bill Secondary Insurance'
                     OR (
-                        appt_billing_status = 'Bill Insurance'
+                        a.appt_billing_status = 'Bill Insurance'
                         AND ins1_status = 'Coordination of Benefits'
-                    ) THEN secondary_insurer_company
+                    ) THEN p.secondary_insurance_company
                 ELSE p.primary_insurance_company
             END AS patient_insurance_company
 
@@ -76,7 +73,6 @@ WITH
             LEFT JOIN doctors AS d ON a.appt_doctor_id = d.doctor_id AND {{ filter_pg("d") }}
             LEFT JOIN offices AS o ON a.appt_office_id = o.office_id
             LEFT JOIN patients AS p ON a.appt_patient_id = p.patient_id
-            LEFT JOIN cash_payments AS cp ON li.line_item_id = cp.cash_line_item_id
         WHERE li.li_appointment_id IS NULL OR a.appointment_id IS NOT NULL
     )
 
