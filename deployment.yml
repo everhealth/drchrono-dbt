@@ -30,7 +30,7 @@ jobs:
 
  - name: table_sizes
    targetName: dev 
-   schedule: '*/30 * * * *' 
+   schedule: '26,56 * * * *' 
    timeout: 30m
    steps:
      - name: table_sizes 
@@ -38,7 +38,7 @@ jobs:
 
  - name: node_storage
    targetName: dev 
-   schedule: '*/5 * * * *' 
+   schedule: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *' 
    timeout: 30m
    steps:
      - name: node_storage 
