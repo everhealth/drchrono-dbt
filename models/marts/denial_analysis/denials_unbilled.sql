@@ -5,16 +5,16 @@
     )
 }}
 SELECT
-    lit.id
+    lit.line_item_transaction_id
     , lit.code
     , lit.adjustment_reason
-    , lit.created_at
-    , lit.posted_date
+    , lit.lit_created_at
+    , lit.lit_posted_date
     , CASE
-        WHEN lit.adjusted_adjustment_reason IN ('ADJUST_INS', 'ADJUST_PT') THEN lit.adjustment
+        WHEN lit.adjusted_adjustment_reason IN ('ADJUST_INS', 'ADJUST_PT') THEN lit.lit_adjustment
         ELSE 0
     END             AS zeroed_adjustment
-    , lit.adjustment
+    , lit.lit_adjustment
     , ca.id         AS appointment_id
     , ca.billing_provider_id
     , ca.primary_insurer_payer_id
@@ -27,7 +27,7 @@ SELECT
     , CASE
         WHEN
             NOT lit.appointment_id
-            OR ins_idx = 0 THEN 'N/A'
+            OR lit.ins_idx = 0 THEN 'N/A'
         WHEN lit.ins_idx = 1
             THEN COALESCE(
                 ca.primary_insurer_company || ' (' || ca.primary_insurer_payer_id || ')'
@@ -71,26 +71,20 @@ SELECT
     , cd.id         AS doctor_id
     , cd.practice_group_id
 FROM
-    {{ source("chronometer_production","billing_lineitemtransaction") }} AS lit
-    /*
-             LEFT OUTER JOIN billing_eraobject ON (billing_lineitemtransaction.era_id = billing_eraobject.id)
-             INNER JOIN billing_billinglineitem ON (billing_lineitemtransaction.line_item_id = billing_billinglineitem.id)
-             INNER JOIN chronometer_appointment ON (billing_lineitemtransaction.appointment_id = chronometer_appointment.id)
-             LEFT OUTER JOIN chronometer_patient ON (billing_lineitemtransaction.patient_id = chronometer_patient.id)
-             */
-    LEFT OUTER JOIN {{ source("chronometer_production", "billing_eraobject") }} AS era ON (lit.era_id = era.id)
-    INNER JOIN {{ source("chronometer_production", "billing_billinglineitem") }} AS bli ON (lit.line_item_id = bli.id)
-    INNER JOIN {{ source("chronometer_production", "chronometer_appointment") }} AS ca ON (lit.appointment_id = ca.id)
-    INNER JOIN {{ source("chronometer_production", "chronometer_patient") }} AS cp ON (ca.patient_id = cp.id)
-    INNER JOIN {{ source("chronometer_production", "chronometer_doctor") }} AS cd ON (lit.doctor_id = cd.id)
+    {{ ref("int_lineitems_transactions") }} AS lit
+    LEFT OUTER JOIN {{ ref("stg_era_objects") }} AS era ON (lit.era_id = era.era_id)
+    INNER JOIN {{ ref("stg_line_items") }} AS bli ON (lit.line_item_id = bli.line_item_id)
+    INNER JOIN {{ ref("stg_appointments") }} AS ca ON (lit.appointment_id = ca.appointment_id)
+    INNER JOIN {{ ref("stg_patients") }} AS cp ON (ca.appt_patient_id = cp.patient_id)
+    INNER JOIN {{ ref("stg_doctors") }} AS cd ON (lit.doctor_id = cd.doctor_id)
 WHERE
-    denied_flag = TRUE
+    bli.denied_flag = TRUE
     AND (
         (
-            ins1_status = 'ERA Denied'
+            ca.ins1_status = 'ERA Denied'
             AND ca.billing_status != 'Bill Secondary Insurance'
         )
-        OR ins2_status = 'ERA Denied'
+        OR ca.ins2_status = 'ERA Denied'
     )
     AND lit.adjustment_reason IN (
         '10'

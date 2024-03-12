@@ -21,7 +21,7 @@ SELECT
     , CASE
         WHEN
             NOT lit.appointment_id
-            OR ins_idx = 0 THEN 'N/A'
+            OR lit.ins_idx = 0 THEN 'N/A'
         WHEN lit.ins_idx = 1
             THEN COALESCE(
                 ca.primary_insurer_company || ' (' || ca.primary_insurer_payer_id || ')'
@@ -66,12 +66,6 @@ SELECT
     , cd.practice_group_id
 FROM
     {{ source("chronometer_production","billing_lineitemtransaction") }} AS lit
-    /*
-             LEFT OUTER JOIN billing_eraobject ON (billing_lineitemtransaction.era_id = billing_eraobject.id)
-             INNER JOIN billing_billinglineitem ON (billing_lineitemtransaction.line_item_id = billing_billinglineitem.id)
-             INNER JOIN chronometer_appointment ON (billing_lineitemtransaction.appointment_id = chronometer_appointment.id)
-             LEFT OUTER JOIN chronometer_patient ON (billing_lineitemtransaction.patient_id = chronometer_patient.id)
-             */
     LEFT OUTER JOIN {{ source("chronometer_production", "billing_eraobject") }} AS era ON (lit.era_id = era.id)
     INNER JOIN {{ source("chronometer_production", "billing_billinglineitem") }} AS bli ON (lit.line_item_id = bli.id)
     INNER JOIN {{ source("chronometer_production", "chronometer_appointment") }} AS ca ON (lit.appointment_id = ca.id)
