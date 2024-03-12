@@ -8,7 +8,7 @@ redshift_reports:
       schema: dev
       threads: 4
       type: redshift
-      user: dbt_stg
+      user: dbt_user
     prod:
       dbname: reports
       host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_PROD') }}"
@@ -26,5 +26,5 @@ redshift_reports:
       schema: public
       threads: 4
       type: redshift
-      user: reports_user
+      user: dbt_user
   target: staging
