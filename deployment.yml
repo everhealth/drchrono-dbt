@@ -3,7 +3,6 @@ jobs:
 # Job names must be unique.
 
  - name: hourly_incremental
-   targetName: "{{ env_var('DBT_TARGET') }}" 
    schedule: '0 * * * *' 
    timeout: 40m
    steps:
@@ -11,7 +10,6 @@ jobs:
        command: dbt run --models +mrt_daysheet_summary 
        
  - name: daily_refresh
-   targetName: "{{ env_var('DBT_TARGET') }}" 
    schedule: '30 7 * * 1-5' 
    timeout: 60m
    steps:
@@ -21,7 +19,6 @@ jobs:
        command: dbt run --full-refresh --models mrt_daysheet_debits mrt_daysheet_credits mrt_daysheet_adjustments mrt_daysheet_cashpayments 
 
  - name: table_sizes
-   targetName: "{{ env_var('DBT_TARGET') }}" 
    schedule: '26-56/30 * * * *' 
    timeout: 30m
    steps:
@@ -29,7 +26,6 @@ jobs:
        command: dbt run --models +table_sizes
 
  - name: node_storage
-   targetName: "{{ env_var('DBT_TARGET') }}" 
    schedule: '2-57/5 * * * *' 
    timeout: 30m
    steps:
