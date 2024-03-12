@@ -6,7 +6,7 @@ redshift_reports:
       password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
       port: 5439
       schema: dev
-      threads: 4
+      threads: 2
       type: redshift
       user: dbt_user
     prod:
@@ -15,7 +15,7 @@ redshift_reports:
       password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_PROD') }}"
       port: 3306
       schema: public
-      threads: 4
+      threads: 2
       type: redshift
       user: fivetran
     staging:
@@ -24,7 +24,7 @@ redshift_reports:
       password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
       port: 5439
       schema: public
-      threads: 4
+      threads: 2
       type: redshift
-      user: dbt_user
+      user: reports_user
   target: staging
