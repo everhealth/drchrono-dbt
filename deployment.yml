@@ -2,16 +2,16 @@ jobs:
 # Give each job a unique name. The name will be displayed in the Fivetran dashboard once your jobs are imported.
 # Job names must be unique.
 
- - name: hourly_incremental_prod
-   targetName: prod 
+ - name: hourly_incremental
+   targetName: "{{ env_var('DBT_TARGET') }}" 
    schedule: '0 * * * *' 
    timeout: 40m
    steps:
      - name: run daysheet summary 
        command: dbt run --models +mrt_daysheet_summary 
        
- - name: daily_refresh_prod
-   targetName: prod 
+ - name: daily_refresh
+   targetName: "{{ env_var('DBT_TARGET') }}" 
    schedule: '30 7 * * 1-5' 
    timeout: 60m
    steps:
@@ -20,16 +20,16 @@ jobs:
      - name: run full refresh on daysheet tables 
        command: dbt run --full-refresh --models mrt_daysheet_debits mrt_daysheet_credits mrt_daysheet_adjustments mrt_daysheet_cashpayments 
 
- - name: table_sizes_prod
-   targetName: prod 
+ - name: table_sizes
+   targetName: "{{ env_var('DBT_TARGET') }}" 
    schedule: '26-56/30 * * * *' 
    timeout: 30m
    steps:
      - name: table_sizes 
        command: dbt run --models +table_sizes
 
- - name: node_storage_prod
-   targetName: prod 
+ - name: node_storage
+   targetName: "{{ env_var('DBT_TARGET') }}" 
    schedule: '2-57/5 * * * *' 
    timeout: 30m
    steps:
