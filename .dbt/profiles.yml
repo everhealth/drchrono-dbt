@@ -26,5 +26,5 @@ redshift_reports:
       schema: "{{ env_var('WAREHOUSE_SCHEMA_NAME', 'dbt_awick') }}"
       threads: 2
       type: redshift
-      user: "{{ env_var('REDSHIFT_USER_STG', 'reports_user') }}"
+      user: "{{ env_var('REDSHIFT_USER_STG', 'ft_user') }}"
   target: staging
