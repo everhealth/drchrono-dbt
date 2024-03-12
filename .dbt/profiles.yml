@@ -2,8 +2,8 @@ redshift_reports:
   outputs:
     dev:
       dbname: reports
-      host: {{ env_var('DBT_REDSHIFT_HOST_REPORTING_STG') }}
-      password: {{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}
+      host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_STG') }}"
+      password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
       port: 5439
       schema: dev
       threads: 4
@@ -11,8 +11,8 @@ redshift_reports:
       user: dbt_user
     prod:
       dbname: reports
-      host: {{ env_var('DBT_REDSHIFT_HOST_REPORTING_PROD') }}
-      password: {{ env_var('DBT_REDSHIFT_APP_PASSWORD_PROD') }}
+      host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_PROD') }}"
+      password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_PROD') }}"
       port: 3306
       schema: public
       threads: 4
@@ -20,8 +20,8 @@ redshift_reports:
       user: fivetran
     staging:
       dbname: reports
-      host: {{ env_var('DBT_REDSHIFT_HOST_REPORTING_STG') }}
-      password: {{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}
+      host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_STG') }}"
+      password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
       port: 5439
       schema: public
       threads: 4
