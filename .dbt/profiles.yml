@@ -1,9 +1,9 @@
 redshift_reports:
   outputs:
     dev:
-      dbname: reports
-      host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_STG') }}"
-      password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
+      dbname: "{{ env_var('REDSHIFT_DBNAME_STG') }}"
+      host: "{{ env_var('REDSHIFT_HOST_REPORTING_STG') }}"
+      password: "{{ env_var('REDSHIFT_APP_PASSWORD_STG') }}"
       port: 5439
       schema: dev
       threads: 2
@@ -26,5 +26,5 @@ redshift_reports:
       schema: public
       threads: 2
       type: redshift
-      user: reports_user
+      user: dbt_user
   target: staging
