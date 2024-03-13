@@ -1,30 +1,30 @@
 redshift_reports:
   outputs:
     dev:
-      dbname: "{{ env_var('REDSHIFT_DBNAME_STG') }}"
-      host: "{{ env_var('REDSHIFT_HOST_REPORTING_STG') }}"
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_STG') }}"
+      dbname: reports
+      host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_STG') }}"
+      password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
       port: 5439
       schema: dev
       threads: 2
       type: redshift
-      user: dbt_stg
+      user: dbt_user
     prod:
-      dbname: "{{ env_var('REDSHIFT_DBNAME_PROD') }}"
-      host: "{{ env_var('REDSHIFT_HOST_REPORTING_PROD') }}"
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_PROD') }}"
+      dbname: reports
+      host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_PROD') }}"
+      password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_PROD') }}"
+      port: 3306
+      schema: public
+      threads: 2
+      type: redshift
+      user: fivetran
+    staging:
+      dbname: reports
+      host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_STG') }}"
+      password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
       port: 5439
       schema: public
       threads: 2
       type: redshift
-      user: dbt_prod
-    staging:
-      dbname: "{{ env_var('REDSHIFT_DBNAME_STG') }}"
-      host: "{{ env_var('REDSHIFT_HOST_REPORTING_STG') }}"
-      password: "{{ env_var('REDSHIFT_APP_PASSWORD_REPORTING_STG') }}"
-      port: 5439
-      schema: "{{ env_var('WAREHOUSE_SCHEMA_NAME', 'dbt_awick') }}"
-      threads: 2
-      type: redshift
-      user: "{{ env_var('REDSHIFT_USER_STG', 'ft_user') }}"
+      user: dbt_user
   target: staging
