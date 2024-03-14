@@ -17,7 +17,7 @@ redshift_reports:
       schema: public
       threads: 2
       type: redshift
-      user: fivetran
+      user: dbt_user
     staging:
       dbname: reports
       host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_STG') }}"
