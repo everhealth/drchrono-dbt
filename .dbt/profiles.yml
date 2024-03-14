@@ -13,7 +13,7 @@ redshift_reports:
       dbname: reports
       host: "{{ env_var('DBT_REDSHIFT_HOST_REPORTING_PROD') }}"
       password: "{{ env_var('DBT_REDSHIFT_APP_PASSWORD_PROD') }}"
-      port: 3306
+      port: 5439
       schema: public
       threads: 2
       type: redshift
