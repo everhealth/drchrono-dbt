@@ -14,7 +14,7 @@ jobs:
    timeout: 60m
    steps:
      - name: run utility tables
-       command: dbt run --models +utility_runner
+       command: dbt run --models +util_runner
      - name: run full refresh on daysheet tables 
        command: dbt run --full-refresh --models mrt_daysheet_debits mrt_daysheet_credits mrt_daysheet_adjustments mrt_daysheet_cashpayments 
 
