@@ -16,7 +16,7 @@ jobs:
      - name: run utility tables
        command: dbt run --models +util_runner
      - name: run full refresh on daysheet tables 
-       command: dbt run --full-refresh --models mrt_daysheet_debits mrt_daysheet_credits mrt_daysheet_adjustments mrt_daysheet_cashpayments 
+       command: dbt run --full-refresh --models +mrt_daysheet_debits +mrt_daysheet_credits +mrt_daysheet_adjustments +mrt_daysheet_cashpayments 
 
  - name: table_sizes
    schedule: '26-56/30 * * * *' 
