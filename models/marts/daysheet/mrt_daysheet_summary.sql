@@ -2,7 +2,8 @@
     config(
         SORT=["practice_group_id", "doctor_id"],
         materialized = "view",
-        bind=False
+        bind=False,
+        post_hook="GRANT SELECT ON public_marts.{{ this }} TO superset_user"
     ) 
 }}
 
