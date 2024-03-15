@@ -18,6 +18,11 @@ SELECT
     , billing_code
     , practice_group_id
 
+    --ids (only keeping ids of each daysheet types grain)
+    , line_item_id as line_item_id
+    , NULL as line_item_transaction_id
+    , NULL as cashpayment_id
+
     --dates
     , date_of_service
     , li_created_at AS debit_posted_date
@@ -35,7 +40,7 @@ SELECT
 
 FROM {{ ref("mrt_daysheet_debits") }} AS debits
 
-UNION DISTINCT
+UNION ALL
 
 SELECT
     -- filter fields
@@ -48,6 +53,11 @@ SELECT
     , exam_room_name
     , billing_code
     , practice_group_id
+
+        --ids
+    , NULL as line_item_id
+    , line_item_transaction_id as line_item_transaction_id
+    , NULL as cashpayment_id
 
     --dates
     , NULL             AS date_of_service
@@ -89,6 +99,11 @@ SELECT
     , NULL             AS cash_posted_date
     , NULL             AS cash_payment_date
 
+     --ids
+    , NULL as line_item_id
+    , line_item_transaction_id as line_item_transaction_id
+    , NULL as cashpayment_id
+
     -- metric fields
     , NULL             AS debit_amount
     , NULL             AS credit_amount
@@ -118,6 +133,11 @@ SELECT
     , NULL               AS ca_deposit_date
     , posted_date        AS cash_posted_date
     , payment_date       AS cash_payment_date
+
+    --ids
+    , NULL as line_item_id
+    , NULL as line_item_transaction_id
+    , cashpayment_id as cashpayment_id
 
     -- metric fields
     , NULL               AS debit_amount
