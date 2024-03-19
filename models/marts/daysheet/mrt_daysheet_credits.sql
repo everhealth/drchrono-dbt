@@ -36,12 +36,7 @@ WITH fresh_data AS (
         {{ ref("stg_practice_group_options") }} AS pgo
         ON lit.practice_group_id = pgo.practice_group_id
     WHERE
-        coalesce(appointment_status, '') NOT IN (
-            'No Show', 'Cancelled', 'Rescheduled'
-        )
-        AND ins_paid != 0
-        AND adjustment_reason IN ('-3', '253', '225')
-        -- adjustment_reasons: -3 = insurance payment, 225 = interest, 253 = sequestration
+        ins_paid != 0
         AND lit_is_archived IS false
         AND greatest(lit_created_at, lit_posted_date, era_deposit_date)
         > current_date - INTERVAL '365 days'
