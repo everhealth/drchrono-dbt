@@ -10,6 +10,7 @@ jobs:
        command: dbt run --models +mrt_daysheet_summary 
      - name: run aging AR 
        command: dbt run --models +mrt_aging_ar_details 
+
        
  - name: daily_refresh
    schedule: '30 7 * * 1-5' 
@@ -20,6 +21,7 @@ jobs:
        command: dbt run --models +util_runner
      - name: run full refresh on daysheet tables 
        command: dbt run --full-refresh --models +mrt_daysheet_summary
+
 
  - name: table_sizes
    schedule: '26-56/30 * * * *' 
