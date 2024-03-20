@@ -2,7 +2,8 @@
     config(
         SORT=["practice_group_id", "doctor_id"],
         materialized = "view",
-        bind=False
+        bind=False,
+        post_hook="GRANT SELECT ON {{ this }} TO superset_user"
     ) 
 }}
 
@@ -17,6 +18,11 @@ SELECT
     , exam_room_name
     , billing_code
     , practice_group_id
+
+    --ids (only keeping ids of each daysheet types grain)
+    , line_item_id as line_item_id
+    , NULL as line_item_transaction_id
+    , NULL as cashpayment_id
 
     --dates
     , date_of_service
@@ -35,7 +41,7 @@ SELECT
 
 FROM {{ ref("mrt_daysheet_debits") }} AS debits
 
-UNION DISTINCT
+UNION ALL
 
 SELECT
     -- filter fields
@@ -48,6 +54,11 @@ SELECT
     , exam_room_name
     , billing_code
     , practice_group_id
+
+    --ids (only keeping ids of each daysheet types grain)
+    , NULL as line_item_id
+    , line_item_transaction_id as line_item_transaction_id
+    , NULL as cashpayment_id
 
     --dates
     , NULL             AS date_of_service
@@ -80,6 +91,11 @@ SELECT
     , billing_code
     , practice_group_id
 
+    --ids (only keeping ids of each daysheet types grain)
+    , NULL as line_item_id
+    , line_item_transaction_id as line_item_transaction_id
+    , NULL as cashpayment_id
+
     --dates
     , NULL             AS date_of_service
     , NULL             AS debit_posted_date
@@ -109,6 +125,11 @@ SELECT
     , exam_room_name
     , billing_code
     , practice_group_id
+
+    --ids (only keeping ids of each daysheet types grain)
+    , NULL as line_item_id
+    , NULL as line_item_transaction_id
+    , cashpayment_id as cashpayment_id
 
     --dates
     , NULL               AS date_of_service

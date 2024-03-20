@@ -70,7 +70,7 @@ WITH
         FROM line_items AS li
             LEFT JOIN
                 appointments AS a
-                ON li.li_appointment_id = a.appointment_id AND {{ days_ago("a.appt_updated_at", 90) }}
+                ON li.li_appointment_id = a.appointment_id
             LEFT JOIN doctors AS d ON a.appt_doctor_id = d.doctor_id AND {{ filter_pg("d") }}
             LEFT JOIN doctors AS bp ON a.billing_provider_id = bp.doctor_id 
             LEFT JOIN offices AS o ON a.appt_office_id = o.office_id

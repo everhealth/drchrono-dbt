@@ -2,7 +2,8 @@
     config(
         SORT=["practice_group_id", "doctor_id"],
         materialized = "incremental",
-        unique_key = 'line_item_id'
+        unique_key = 'line_item_id',
+        post_hook="GRANT SELECT ON {{ this }} TO superset_user"
     ) 
 }}
 

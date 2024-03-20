@@ -1,3 +1,9 @@
+{{ 
+    config(
+        post_hook="GRANT SELECT ON {{ this }} TO superset_user"
+    ) 
+}}
+
 WITH date_type_choices AS (
     SELECT
         'Posted Date' AS debits_date_type,

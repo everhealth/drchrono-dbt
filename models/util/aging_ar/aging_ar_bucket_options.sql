@@ -1,3 +1,9 @@
+{{ 
+    config(
+        post_hook="GRANT SELECT ON {{ this }} TO superset_user"
+    ) 
+}}
+
 WITH bucket_type_choices AS (
     SELECT '30 days' AS bucket_type
 

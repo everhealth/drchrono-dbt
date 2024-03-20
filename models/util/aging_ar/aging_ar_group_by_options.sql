@@ -1,3 +1,9 @@
+{{ 
+    config(
+        post_hook="GRANT SELECT ON {{ this }} TO superset_user"
+    ) 
+}}
+
 WITH group_by_choices AS (
     SELECT 'Provider' AS group_by
 

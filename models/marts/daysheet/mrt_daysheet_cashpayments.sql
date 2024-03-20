@@ -2,7 +2,8 @@
     config(
         SORT=["doctor_id", "posted_date", "appt_date_of_service"],
         materialized='incremental',
-        unique_key = 'cashpayment_id'
+        unique_key = 'cashpayment_id',
+        post_hook="GRANT SELECT ON {{ this }} TO superset_user"
     ) 
 }}
 
