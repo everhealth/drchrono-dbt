@@ -9,8 +9,9 @@ jobs:
      - name: run daysheet summary 
        command: dbt run --models +mrt_daysheet_summary 
      - name: run aging AR 
-       command: dbt run --models +mrt_aging_ar_details 
-
+       command: dbt run --models +mrt_aging_ar_details
+     - name: run denials 
+       command: dbt run --models +mrt_denials
        
  - name: daily_refresh
    schedule: '30 7 * * 1-5' 
