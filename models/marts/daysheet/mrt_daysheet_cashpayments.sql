@@ -39,9 +39,6 @@ WITH fresh_data AS (
 
     WHERE
         cashpayment_amount != 0
-        AND coalesce(appointment_status, '') NOT IN (
-            'Cancelled', 'Rescheduled'
-        )
         AND datediff(
             DAY, greatest(posted_date, payment_date), current_date
         )
