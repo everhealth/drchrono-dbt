@@ -23,7 +23,7 @@ SELECT
     , denied_flag
     , appointment_id                             AS li_appointment_id
     , COALESCE(billed, 0)                        AS billed
-    , CONVERT_TIMEZONE('EST', 'UTC', created_at) AS li_created_at
+    , created_at AS li_created_at
     , updated_at                                 AS li_updated_at
 FROM {{ source("chronometer_production", "billing_billinglineitem") }}
 WHERE _fivetran_deleted IS FALSE
