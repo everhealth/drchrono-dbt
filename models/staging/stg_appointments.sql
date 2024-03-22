@@ -29,18 +29,11 @@ SELECT
     , supervising_provider_id
     --dates
     , updated_at                                        AS appt_updated_at
-    , CONVERT_TIMEZONE('PST', 'UTC', first_billed_date) AS first_billed_date
-    , CONVERT_TIMEZONE('PST', 'UTC', last_billed_date)  AS last_billed_date
-    , CONVERT_TIMEZONE(
-        'PST', 'UTC', service_date_start_date
-    )                                                   AS service_date_start_date
-    , CONVERT_TIMEZONE(
-        'PST', 'UTC', service_date_end_date
-    )                                                   AS service_date_end_date
-    , CONVERT_TIMEZONE('PST', 'UTC', created_at)        AS appt_created_at
-
-
-
+    , first_billed_date                                 AS first_billed_date        -- stored in PST TZ
+    , last_billed_date                                  AS last_billed_date         -- stored in PST TZ
+    , service_date_start_date                           AS service_date_start_date  -- stored in PST TZ
+    , service_date_end_date                             AS service_date_end_date    -- stored in PST TZ
+    , created_at                                        AS appt_created_at          -- stored in PST TZ
     --insurance collapse
 
     , CASE
