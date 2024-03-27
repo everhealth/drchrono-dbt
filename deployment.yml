@@ -21,8 +21,8 @@ jobs:
        command: dbt run --models +util_runner
      - name: run full refresh on daysheet tables 
        command: dbt run --full-refresh --models +mrt_daysheet_summary
-     - name: run full refresh on daysheet tables 
-       command: dbt run --full-refresh --models +mrt_daysheet_summary
+     - name: run full refresh on fincial transaction tables 
+       command: dbt run --full-refresh --select "marts/financial_transactions"
 
 
  - name: table_sizes
