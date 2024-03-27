@@ -1,7 +1,7 @@
 {{
     config(
         SORT=[
-            "bli_created_at",
+            "cashpayment_id",
             "date_of_service",
             "practice_group_id",
             "doctor_id",
@@ -24,7 +24,6 @@ WITH
     , line_items AS (SELECT * FROM {{ ref("stg_line_items") }})
 
     , final AS (
-
         SELECT
 
             cp.*
