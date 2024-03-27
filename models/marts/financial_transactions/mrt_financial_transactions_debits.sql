@@ -37,10 +37,6 @@ WITH fresh_data AS (
         )
         AND COALESCE(appointment_status, '') NOT IN ('Cancelled', 'Rescheduled')
         AND billed > 0
-        AND DATEDIFF(
-            DAY, GREATEST(li_created_at, date_of_service), CURRENT_DATE
-        )
-        < 365
 )
 
 {% if is_incremental() %}

@@ -38,8 +38,6 @@ WITH fresh_data AS (
     WHERE
         ins_paid != 0
         AND lit_is_archived IS false
-        AND greatest(lit_created_at, lit_posted_date, era_deposit_date)
-        > current_date - INTERVAL '365 days'
         AND (era_is_verified OR NOT pgo.verify_era_before_post)
 )
 {% if is_incremental() %}

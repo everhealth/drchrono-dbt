@@ -39,10 +39,6 @@ WITH fresh_data AS (
 
     WHERE
         cashpayment_amount != 0
-        AND datediff(
-            DAY, greatest(posted_date, payment_date), current_date
-        )
-        < 365
 )
 
 {% if is_incremental() %}

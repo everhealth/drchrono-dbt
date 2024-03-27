@@ -41,7 +41,6 @@ where
     adjusted_adjustment_reason in ('ADJUST_INS', 'ADJUST_PT')
     and not (COALESCE(adjustment_group_code, '') = 'CO' AND ins_idx = 2)
     and lit_is_archived is false
-    and GREATEST(lit_created_at,lit_posted_date, era_deposit_date) > current_date - INTERVAL '365 days'
     and (era_is_verified or not pgo.verify_era_before_post)
 )
 
