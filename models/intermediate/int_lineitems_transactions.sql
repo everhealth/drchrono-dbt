@@ -28,6 +28,8 @@ WITH
             END AS ins_info_payer_id
         FROM line_item_transactions AS lit
             LEFT JOIN era_objects AS era ON lit.lit_era_id = era.era_id
+            LEFT JOIN appointment_info AS ai ON lit.lit_appointment_id = ai.appointment_id
+            LEFT JOIN line_items AS li ON lit.lit_line_item_id = li.line_item_id
         WHERE lit.lit_line_item_id IS NULL OR li.line_item_id IS NOT NULL
     )
 
