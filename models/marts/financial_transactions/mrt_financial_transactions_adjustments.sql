@@ -1,13 +1,12 @@
 {{ 
     config(
         SORT=["practice_group_id", "doctor_id"],
-        materialized = "incremental",
         unique_key = 'line_item_transaction_id',
         post_hook="GRANT SELECT ON {{ this }} TO superset_user"
     ) 
 }}
 
-WITH fresh_data AS (
+WITH final AS (
     select
         line_item_transaction_id,
         appointment_id, 
@@ -44,48 +43,6 @@ where
     and (era_is_verified or not pgo.verify_era_before_post)
 )
 
-{% if is_incremental() %}
-    , max_updated_at AS (
-        SELECT
-            MAX(li_updated_at) AS max_li_updated_at,
-            MAX(appt_updated_at) AS max_appt_updated_at,
-            MAX(doc_updated_at) AS max_doc_updated_at,
-            MAX(office_updated_at) AS max_office_updated_at,
-            MAX(patient_updated_at) AS max_patient_updated_at,        
-            max(lit_updated_at) AS max_lit_updated_at,
-            max(era_updated_at) AS max_era_updated_at
-        FROM {{ this }}
-    ),
+SELECT * FROM final
 
-    min_of_max AS (
-        SELECT
-            LEAST(
-                max_li_updated_at,
-                max_appt_updated_at,
-                max_doc_updated_at,
-                max_office_updated_at,
-                max_patient_updated_at,
-                max_lit_updated_at,
-                max_era_updated_at
-            ) AS minmax
-        FROM max_updated_at
-    )
-
-    SELECT * FROM fresh_data
-    WHERE (
-        GREATEST(
-            li_updated_at,
-            appt_updated_at,
-            doc_updated_at,
-            office_updated_at,
-            patient_updated_at,
-            lit_updated_at,
-            era_updated_at
-        )
-        > (SELECT minmax FROM min_of_max)
-    )
-{% else %}
-SELECT * FROM fresh_data
-
-{% endif %}
 {{ apply_limit_if_test() }}
