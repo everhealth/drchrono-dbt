@@ -66,7 +66,7 @@ WITH
 
         FROM
             appointments AS a
-            LEFT JOIN doctors AS d ON a.appt_doctor_id = d.doctor_id AND {{ filter_pg("d") }}
+            LEFT JOIN doctors AS d ON a.appt_doctor_id = d.doctor_id 
             LEFT JOIN doctors AS bp ON a.billing_provider_id = bp.doctor_id
             LEFT JOIN offices AS o ON a.appt_office_id = o.office_id
             LEFT JOIN patients AS p ON a.appt_patient_id = p.patient_id
